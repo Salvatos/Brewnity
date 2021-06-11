@@ -1,0 +1,250 @@
+@font-face {
+	font-family: 'OptimusPrincepsSemiBold';
+	src: url('../fonts/OptimusPrincepsSemiBold.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Cinzel';
+	src: url('../fonts/Cinzel-Regular.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Cinzel';
+	src: url('../fonts/Cinzel-Bold.otf') format('opentype');
+	font-weight: bold;
+	font-style: normal;
+}
+a {
+	color: #286ba5;
+}
+h4 {
+	font-size: 0.9rem;
+	margin: 0.4rem 0 0.1rem;
+}
+summary {
+    cursor: pointer;
+    list-style-type: none;
+}
+summary span::after, summary h3::after {
+    content: " â–¼";
+}
+
+/* SECTIONS */
+#intro {
+	margin-bottom: 0.3rem;
+}
+#footnotes {
+	clear: both;
+	margin-top: 1rem;
+}
+.flex-dual {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+.column:nth-of-type(1) {
+	width: calc(100% - 380px);
+	min-width: 60%;
+	margin-right: 25px;
+}
+.column:nth-of-type(2) {
+	width: 345px;
+}
+.callnote {
+	font-weight: bold;
+}
+.callnote a {
+	text-decoration: none;
+}
+.footnote {
+	font-size: 0.8rem;
+	hyphens: auto;
+	text-align: justify;
+	margin: 0.5rem 0;
+}
+#release-notes {
+	text-align: center;
+	margin: 1rem 0;
+}
+#release-notes summary {
+	cursor: pointer;
+    list-style-type: none;
+    color: #5c5c5c;
+}
+#release-notes details {
+	margin: 0;
+}
+ul.release-notes {
+	text-align: left;
+	font-size: 0.8rem;
+}
+ul.release-notes ul {
+	margin-bottom: 0.5rem;
+}
+
+/* FORM */
+input[type=number] {
+	-moz-appearance: textfield;
+	-webkit-appearance: textfield;
+}
+textarea {
+	width: 30rem;
+}
+#preset, #scale-output {
+	width: 30rem;
+	border-collapse: collapse;
+	text-align: center;
+	background-color: #c8d5dd;
+	margin: 0.3rem 0 0.5rem;
+	font-size: 0.85rem;
+}
+#preset td, #preset th, #scale-output td, #scale-output th {
+	padding: 0 10px;
+}
+#preset td:not(:last-child), #preset th:not(:last-child), #scale-output td:not(:last-child), #scale-output th:not(:last-child) {
+	border-right: 1px solid grey;
+}
+.fieldrow {
+	display: flex;
+	max-width: 27rem;
+	flex-wrap: nowrap;
+	text-align: left;
+}
+.fieldrow > div {
+	margin-right: 0.5rem;
+}
+.fieldrow-4 input {
+	width: 2.75rem;
+}
+.fieldrow-5 input {
+	width: 3.4rem;
+}
+.fieldrow-center h4 {
+	text-align: center;
+}
+a.insert-tags {
+	padding: 0.3rem 0.5rem;
+	cursor: pointer;
+	color: #a3a3a3;
+	font-weight: bold;
+}
+
+/* OUTPUT */
+#npcblock {
+	width: 330px;
+	margin: 10px 0;
+	color: black;
+}
+#arrow-up {
+	width: 0;
+	height: 0;
+	margin: 0 auto;
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-bottom: 7px solid #6e1c1e;
+}
+#titlebar {
+	background-color: #6e1c1e;
+	position: relative;
+}
+#titlebar p {
+	text-align: center;
+}
+#npcblock .npc-name {
+	font-family: 'OptimusPrincepsSemiBold', serif;
+	font-size: 22px;
+}
+.npc-types {
+	font-style: italic;
+	font-size: 15px;
+}
+.npc-name, .npc-types {
+	margin: 0;
+}
+.level {
+    position: absolute;
+    top: -13px;
+    left: -15px;
+    border: 1px solid black;
+    border-radius: 50%;
+    background: #41383d;
+	height: 38px;
+    width: 38px;
+    padding-top: 2px;
+    font-size: 22px;
+    font-family: 'Cinzel';
+    font-weight: bold;
+    text-align: center;
+	color: white;
+}
+.subtitle {
+	background-color: #41383d;
+	font-family: 'OptimusPrincepsSemiBold', serif;
+	font-size: 15px;
+}
+.subtitle:not(:nth-last-child(2)) {
+	margin-top: 5px;
+}
+.subsubtitle {
+	background-color: #675661;
+	font-family: 'OptimusPrincepsSemiBold', serif;
+	font-size: 14px;
+}
+#titlebar, .subtitle, .subsubtitle {
+	text-align: center;
+	color: white;
+	padding: 5px;
+}
+.tablerow {
+	display: table;
+	width: 100%;
+	padding: 0 5px;
+}
+.tablerow > * {
+	display: table-row;
+}
+.tablerow > * > * {
+	display: table-cell;
+	text-align: center;
+}
+.subsubheader {
+	background-color: #675661;
+}
+.subsubrow {
+	background-color: #e9d19c;
+}
+.stats div div {
+	width: 16%;
+}
+.attributes div div {
+	width: 25%;
+}
+.numbers {
+	padding: 1px 1px;
+	background-color: #e9d19c;
+	font-size: 17px;
+	text-align: center;
+}
+div.maintext, div.blocktext {
+	padding: 1px 8px 8px 8px;
+	background-color: #e9d19c;
+}
+.maintext, .blocktext {
+	font-size: 16px;
+	text-align: justify;
+}
+.maintext p, .blocktext p {
+	margin: 4px 0 0;
+}
+.maintext {
+	hyphens: auto;
+}
+#url {
+	max-width: 30rem;
+	margin-bottom: 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
