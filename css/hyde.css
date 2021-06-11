@@ -1,0 +1,505 @@
+/*
+ *  __                  __
+ * /\ \                /\ \
+ * \ \ \___   __  __   \_\ \     __
+ *  \ \  _ `\/\ \/\ \  /'_` \  /'__`\
+ *   \ \ \ \ \ \ \_\ \/\ \_\ \/\  __/
+ *    \ \_\ \_\/`____ \ \___,_\ \____\
+ *     \/_/\/_/`/___/> \/__,_ /\/____/
+ *                /\___/
+ *                \/__/
+ *
+ * Designed, built, and released under MIT license by @mdo. Learn more at
+ * https://github.com/poole/hyde.
+ */
+
+
+/*
+ * Contents
+ *
+ * Fonts
+ * Global resets
+ * Sidebar
+ * Container
+ * Reverse layout
+ * Themes
+ */
+
+/* FONTS */
+@font-face {
+	font-family: 'Libre Baskerville';
+	src: url('../fonts/LibreBaskerville-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Libre Baskerville';
+	src: url('../fonts/LibreBaskerville-Bold.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Libre Baskerville';
+	src: url('../fonts/LibreBaskerville-Italic.ttf') format('truetype');
+	font-weight: normal;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'Linux Biolinum O';
+	src: url('../fonts/LinBiolinum_R.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Linux Biolinum O';
+	src: url('../fonts/LinBiolinum_RB.otf') format('opentype');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Linux Biolinum O';
+	src: url('../fonts/LinBiolinum_RI.otf') format('opentype');
+	font-weight: normal;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'Linux Libertine';
+	src: url('../fonts/LinLibertine_R.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Linux Libertine';
+	src: url('../fonts/LinLibertine_RB.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Linux Libertine';
+	src: url('../fonts/LinLibertine_RI.ttf') format('truetype');
+	font-weight: normal;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'Linux Libertine Capitals';
+	src: url('../fonts/LinLibertineC.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Linux Libertine Capitals';
+	src: url('../fonts/LinLibertine_aBS.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Stoke';
+	src: url('../fonts/Stoke-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'URW Bookman L';
+	src: url('../fonts/URW_Bookman_L_Demibold.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
+}
+
+/*
+ * Global resets
+ *
+ * Update the foundational and global aspects of the page.
+ */
+
+html {
+  font-family: 'Linux Biolinum O', sans-serif;
+}
+@media (min-width: 48em) {
+  html {
+    font-size: 15px;
+  }
+}
+@media (min-width: 58em) {
+  html {
+    font-size: 18px;
+  }
+}
+
+
+/*
+ * Sidebar
+ *
+ * Flexible banner for housing site name, intro, and "footer" content. Starts
+ * out above content in mobile and later moves to the side with wider viewports.
+ */
+
+.sidebar {
+  text-align: center;
+  padding: 0.5rem 1rem;
+  color: rgba(255,255,255,.5);
+  background-color: #414b2f;
+  border-left: 7px double white;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+@media (min-width: 48em) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 12rem;
+    text-align: left;
+  }
+}
+
+/* Sidebar links */
+.sidebar a {
+	color: #fff;
+}
+
+img.iconlink {
+	display: inline-block;
+	margin: 0;
+	width: 20px;
+}
+
+/* About section */
+.sidebar-title h1 {
+	text-align: center;
+	margin: 0.5rem 0 1.5rem 0;
+}
+.sidebar-title h1 a {
+	margin-top: 0;
+	font-family: 'URW Bookman L', sans-serif;
+	font-size: 1.1rem;
+	color: #bdbfaf;
+	text-shadow: 0 5px 6px #2c361b;
+	font-weight: bold;
+	line-height: 0.7;
+}
+
+/* Sidebar nav */
+.sidebar-nav {
+  margin-bottom: 1rem;
+}
+.sidebar-nav-item {
+  display: block;
+  line-height: 1.75;
+}
+a.sidebar-nav-item:hover,
+a.sidebar-nav-item:focus {
+  text-decoration: underline;
+}
+.sidebar-nav-item.active {
+  font-weight: bold;
+}
+.navigation {
+	padding-left: 1rem;
+	white-space: nowrap;
+}
+.sidebar-nav ul {
+	list-style: none;
+	margin: 0 0 0.3rem -1rem;
+}
+.sidebar-nav li a, .sidebar-nav li span {
+	font-family: 'Linux Libertine Capitals';
+    color: #f2e9de;
+    text-shadow: 2px 2px 2px black;
+    font-weight: bold;
+    font-size: 1rem;
+}
+.sidebar-nav .has-children li a {
+	color: #e4b044;
+	text-shadow: 1px 1px 0px black;
+	text-decoration: dotted underline;
+	font-family: 'Linux Libertine';
+	font-size: 0.9rem;
+	text-indent: 0.5rem;
+}
+
+/* Sticky sidebar
+ *
+ * Add the `sidebar-sticky` class to the sidebar's container to affix it the
+ * contents to the bottom of the sidebar in tablets and up.
+ */
+
+@media (min-width: 48em) {
+  .sidebar-sticky {
+    position: absolute;
+    min-height: 80%;
+    right:  1rem;
+    /*bottom: 1rem;*/
+    left:   1rem;
+  }
+}
+
+
+/* Container
+ *
+ * Align the contents of the site above the proper threshold with some margin-fu
+ * with a 25%-wide `.sidebar`.
+ */
+
+.content {
+	width: calc(100% - 12rem);
+	padding: 1rem 1.5rem 4rem;
+}
+@media (min-width: 48em) {
+.sidebar {
+    left: auto;
+    right: 0;
+  }
+}
+
+footer {
+	position: absolute;
+	box-sizing: border-box;
+	bottom: 0;
+	padding: 0 2rem;
+	font-size: 0.8rem;
+	text-align: center;
+	width: calc(100% - 12rem);
+}
+.cent-img {
+    text-align: center;
+}
+.cent-img img {
+    display: inline-block;
+    margin: 0;
+}
+.cent-img a {
+    color: #8d8d8d;
+    text-decoration: underline dotted;
+}
+.star-ratings span.star-score, .star-ratings span.star-count {
+	margin: 0;
+}
+.rating-block {
+	float: right;
+}
+
+
+/* Home page */
+.home-boxes {
+	
+}
+.home-box {
+	margin: 0 1rem;
+	border-radius: 5px;
+	position: relative;
+}
+.latest-box {
+	font-size: 1rem;
+}
+.latest-box hr {
+	border: 0;
+	height: 1px;
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); 
+	margin: 0.5rem 1rem;
+}
+.latest-post {
+	border-radius: 20px;
+	padding: 0 0.5rem 0.5rem;
+}
+.latest-post h2 {
+	margin: 0 0 0.5rem 0;
+	display: inline-block;
+}
+.latest-post h2 a {
+	color: #1E3B44;
+	font-size: 1.1rem;
+}
+.latest-post p:last-child {
+	margin-bottom: 0;
+}
+.comment-box {
+	float: right;
+	z-index: 3;
+	width: 15rem;
+	margin: 0 0 0.5rem 0.7rem;
+	font-size: 0.8rem;
+	background: #ededed;
+	box-shadow: 1px 1px 5px grey;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.comment-box h5 {
+	text-align: center;
+	margin: 0.3rem 0 0.5rem;
+}
+.comment-box h5 span {
+	font-size: 0.9rem;
+}
+.comment-box ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+.comment-box li {
+	padding: 0.1rem 0.4rem;
+}
+.comment-box li:nth-child(odd) {
+	background-color: #e7e7e7;
+}
+.comment-box li:nth-child(even) {
+	background-color: #ededed;
+}
+.comment-feed-author {
+	font-weight: bold;
+}
+.comment-feed-comment {
+	font-style: italic;
+}
+
+/* Comments */
+#comments { margin-bottom: 0.5rem; }
+.comment-out { padding: 0.5rem; margin-top: 0.5rem; line-height: 1.4; border-radius: 5px; border: 2px groove #efead0;}
+.comment-in { display: flex; justify-content: space-between; }
+.com-content { max-height: 32em; overflow-y: auto; overflow-x: hidden; padding-right:1.5rem; }
+.com-content p { margin-top: 0; }
+.level-0, .level-1, .level-2, .level-3, .level-4, .level-5, .level-max { background-color: #eae7db; }
+.level-0 {margin-left: 0;}
+.level-1 {margin-left: 0.6rem;}
+.level-2 {margin-left: 1.2rem;}
+.level-3 {margin-left: 1.8rem;}
+.level-4 {margin-left: 2.4rem;}
+.level-5, .level-max {margin-left: 3rem;}
+.com-admin { background: #C1D4DB; }
+.comment-author { font-weight: bold; color: #3C3C3C; font-size: 0.9rem; }
+.com-admin .comment-author { color: #111; }
+.com-authd .comment-author { color: #111; }
+.avatar-block { float:left; margin: 0 0.5rem 0.5rem 0; text-align: center; width: 90px; height: 121px; border-radius: 5px;box-shadow: inset 0px 0px 18px 4px rgba(0,0,0, 0.6); background-size: cover; }
+
+.comment-feed-author {	font-weight: bold; }
+.comment-feed-page {	font-style: italic; }
+.comment-feed-comment {	font-style: italic; }
+.syndicate {	text-align: center; }
+.ridged { border-bottom: 3px ridge #89a8b7; }
+.blogroll-description { font-size: 0.85rem; }
+
+/* Search */
+.search-submit {
+    display: inline-block;
+    border-radius: 4px;
+    background: #eee;
+    border: 1px solid #ccc;
+    vertical-align: top;
+    height: 1.5rem;
+}
+.search-submit img {
+    width: 15px;
+    vertical-align: middle;
+    margin: 0;
+}
+.search-wrapper .search-input {
+    width: calc(100% - 45px);
+    max-width: 25rem;
+    height: 1.5rem;
+    display: inline-block;
+}
+.search-image { float: left; }
+.search-item {
+	margin-left: 130px;
+	margin-bottom: 1rem; }
+.search-item p { margin: 0; }
+.search-title h3 { margin: 0; }
+.search-details { font-size: 13px; }
+.search-row:last-child hr { display: none; }
+
+/* Race block */
+p.princeps {
+	font-family: OptimusPrincepsSemiBold;
+	text-align: center;
+	margin: 0.8rem 0;
+	font-size: 1.1rem;
+	font-variant: small-caps;
+}
+p.race-name {
+	font-size: 1.3rem;
+	font-weight: bold;
+	text-decoration: underline;
+	margin-bottom: 0.5rem;
+}
+.race-block {
+	background: #CAC6D7;
+	color: #333;
+	position:relative;
+	margin: 0 auto;
+	max-width: 50%;
+	overflow:hidden;
+}
+.race-text{
+	border: 1px solid #32394D;  
+	padding:8px 20px 8px;
+}
+p.sizing {
+	margin: 0;
+}
+.race-block table {
+	margin: 0 auto;
+	text-align: center;
+	border-spacing: 2rem 0rem;
+	border-collapse: separate;
+	border: none;
+}
+.race-block th {
+	border: none;
+	background-color: unset !important;
+	padding: 0.25rem .5rem 0;
+}
+.race-block td {
+	font-weight: bold;
+	font-size: 1.7rem;
+	border: none;
+	padding: 0 .5rem 0.25rem;
+}
+.arc-bottom-l, .arc-bottom-r, .arc-top-l, .arc-top-r {
+	position:absolute;
+	background-color: #f2ede7;
+	background-image: url('broken-noise.png');
+	width:48px;
+	height:48px;
+	border-radius:50%;
+	border: 1px solid #32394D;
+}
+.arc-bottom-l {bottom:-24px;left:-24px;}
+.arc-bottom-r {bottom:-24px;right:-24px;}
+.arc-top-l {top:-24px;left:-24px;}
+.arc-top-r {top:-24px;right:-24px;}
+
+/* Artifact block */
+.artifact-block {
+	width: 500px;
+	margin: 10px 0;
+	color: black;
+	margin: 0 auto;
+}
+.artifact-block p {
+    margin: 0;
+    padding: 0;
+}
+.artifact-bar {
+	position: relative;
+	text-align: center;
+	font-family: 'Cinzel', serif;
+	color: white;
+	font-weight: bold;
+	padding: 0.2em 0;
+}
+.artifact-title {
+	background-color: #a38d63;
+}
+.artifact-subtitle {
+	background-color: #786033;
+}
+.artifact-section {
+    padding: 5px 8px 5px 8px;
+	background-color: #d8d2a7;
+}
+.artifact-flavor {
+    font-style: italic;
+}
+.artifact-effects {
+    
+}
