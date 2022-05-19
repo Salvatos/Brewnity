@@ -39,6 +39,11 @@ summary span::after, summary h3::after {
 	clear: both;
 	margin-top: 1rem;
 }
+.footnote:target {
+	background: #fff8de;
+	padding: 5px;
+	border-radius: 10px;
+}
 .flex-dual {
 	display: flex;
 	flex-wrap: wrap;
