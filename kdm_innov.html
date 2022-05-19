@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+	<title>Innovation Manager</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+	    html { font-size: 62.5%; width: 100%; }
+	    body { font-size: 1.6rem; background-color: #f9f7f5; }
+		#cols { display: flex; flex-wrap: nowrap; max-width: 600px; }
+		#cols > * { flex: 1; }
+		#checks { margin-right: 2rem; }
+		#deck { list-style-type: numbers; padding: 0 0 0 2.1rem; }
+		#deck li { position: relative; display: none; margin-bottom: 5px; width: -moz-fit-content; width: -webkit-fit-content; width: fit-content; border-bottom: 1px dashed #bbb; }
+		.feature { font-weight: bold; }
+		#deck .list { display: list-item; }
+		#roll { font-size: 1.6rem; }
+		#clearresult { display: none; }
+		
+		@media only screen and (min-width: 700px) {
+		    body { font-size: 1.5rem;}
+		    #roll { font-size: 1.5rem; }
+		}
+	</style>
+	<script>
+	window.onload = function() {
+		// add a change event listener on all checkboxes
+		var checkboxes = document.querySelectorAll('input[type=checkbox]');
+		for(var i = 0; i < checkboxes.length; i++) {
+		    checkboxes[i].addEventListener('change', builddeck, false);
+		}
+		// build deck at load (useful after soft refresh or if sb hardcoded checked boxes)
+		builddeck();
+	}
+	
+	function builddeck() {
+		var coll = document.getElementsByTagName('li');
+		var cnt = 0;
+		
+		for (var i=0, len=coll.length; i<len; i++) {
+			var req = coll[i].getAttribute('data-req');
+			
+			// a ticked innovation cannot be in the deck; omit
+			if (document.getElementsByName(coll[i].getAttribute('id'))[0].checked) {
+				coll[i].setAttribute("class", "");
+			}
+			else if (req.length > 0) {
+			// requisite is in settlement and this isn't; add to deck
+				if (document.getElementsByName(req)[0].checked) {
+					coll[i].setAttribute("class", "list");
+					cnt++;
+				}
+				else {
+				    // neither this nor its requisite are in the settlement; omit
+					coll[i].setAttribute("class", "");
+				}
+			}
+			// this has no requirement and is not yet in the settlement; add to deck (Language)
+			else {
+				coll[i].setAttribute("class", "list");
+				cnt++;
+			}
+		}
+		
+		document.getElementById('count').innerHTML = cnt; // update die value i.e. cards in deck
+		document.getElementById('dicenum').innerHTML = (document.getElementsByName('Symposium')[0].checked) ? 4 : 2; // update number of draws for Symposium
+		document.getElementById('result').innerHTML = ""; // clear any previous roll when the deck is updated to avoid confusion
+		document.getElementById('clearresult').style.display = 'none'; // hide clear button
+		document.getElementById('roll').setAttribute( "onClick", "javascript: roll();" ); // clear roll history to avoid no longer eligible options re-entering the deck when class is reset
+	}
+	
+	function roll(prev) {
+		// get deck size and roll
+		var rollmax = document.getElementById('count').innerHTML;
+		var result1 = (rollmax > 0) ? Math.floor(Math.random() * rollmax) + 1 : 'not enough options';
+		var result2 = (rollmax > 1) ? Math.floor(Math.random() * rollmax) + 1 : 'no other options';
+		// reroll on duplicate
+		while (result2 == result1) {
+			var result2 = Math.floor(Math.random() * rollmax) + 1;
+		}
+		if (document.getElementsByName('Symposium')[0].checked) {
+			var result3 = (rollmax > 2) ? Math.floor(Math.random() * rollmax) + 1 : 'no other options';
+			// reroll on duplicate
+			while (result3 != 'no other options' && (result3 == result1 || result3 == result2)) {
+				var result3 = Math.floor(Math.random() * rollmax) + 1;
+			}
+			var result4 = (rollmax > 3) ? Math.floor(Math.random() * rollmax) + 1 : 'no other options';
+			// reroll on duplicate
+			while (result4 != 'no other options' && (result4 == result1 || result4 == result2 || result4 == result3)) {
+				var result4 = Math.floor(Math.random() * rollmax) + 1;
+			}
+		}
+		// write rolls next to button
+		document.getElementById('result').innerHTML = (document.getElementsByName('Symposium')[0].checked) ? result1 + ', ' + result2 + ', ' + result3 + ', ' + result4 : result1 + ', ' + result2;
+		// clear previous rolls before applying bold to the deck, on the off-chance someone rerolls without rebuilding the deck first
+		if (prev) {
+			var prevs = prev.split("|");
+			for (var i=0, len=prevs.length; i<len; i++) {
+				document.getElementById(prevs[i]).setAttribute("class", "list");
+			}
+		}
+		// highlight current rolls
+		var adj1 = result1 - 1;
+		var newroll1 = document.getElementsByClassName('list')[adj1];
+		newroll1.setAttribute("class", "list feature");
+		var adj2 = result2 - 1;
+		var newroll2 = document.getElementsByClassName('list')[adj2];
+		newroll2.setAttribute("class", "list feature");
+		if (document.getElementsByName('Symposium')[0].checked) {
+			var adj3 = result3 - 1;
+			var newroll3 = document.getElementsByClassName('list')[adj3];
+			newroll3.setAttribute("class", "list feature");
+			var adj4 = result4 - 1;
+			var newroll4 = document.getElementsByClassName('list')[adj4];
+			newroll4.setAttribute("class", "list feature");
+		}
+		// store current rolls and show clear button
+		if (document.getElementsByName('Symposium')[0].checked) {
+			document.getElementById('roll').setAttribute( "onClick", "javascript: roll('" + newroll1.getAttribute('id') + "|" + newroll2.getAttribute('id') + "|" + newroll3.getAttribute('id') + "|" + newroll4.getAttribute('id') + "');" );
+		}
+		else {
+			document.getElementById('roll').setAttribute( "onClick", "javascript: roll('" + newroll1.getAttribute('id') + "|" + newroll2.getAttribute('id') + "');" );
+		}
+		document.getElementById('clearresult').style.display = 'inline';
+	}
+	
+	function eventdraw() {
+		var events = ['Acid Storm', 'Clinging Mist', 'Cracks in the Ground', 'Dark Dentist', 'Dark Seamstress*', 'Dark Trader', 'Elder Council', 'Glossolalia', 'Haunted', 'Heat Wave', 'Hunt Reenactment', 'Lights in the Sky', 'Murder', 'Nickname', 'Open Maw', 'Plague', 'Rivalry', 'Story in the Snow*', 'Stranger in the Dark', 'Triathlon of Death', 'Weird Dream'];
+		var item = events[Math.floor(Math.random()*events.length)];
+		document.getElementById('event').innerHTML = item;
+	}
+	</script>
+</head>
+<body>
+    <div id="events">
+		<p>
+			Click below to generate a random Settlement Event.<br />
+			<button id="eventdraw" onClick="eventdraw()">Draw</button> <b id="event"></b>
+		</p>
+	</div>
+	<p>
+		Check all Innovations in your Settlement to build your deck, then roll to draw.<br />
+		<button id="roll" onClick="roll()">Roll <span id='dicenum'>2</span>d<span id='count'>0</span></button> = <b id="result"></b> <span id="clearresult">(<a style="cursor: pointer; text-decoration: underline;" onClick="builddeck();">clear result</a>)</span>
+	</p>
+	<div id="cols">
+		<form id="checks">
+			<b>Settlement</b><br />
+			<input type="checkbox" name="Ammonia">Ammonia<br>
+			<input type="checkbox" name="Bed">Bed<br>
+			<input type="checkbox" name="Bloodletting">Bloodletting<br>
+			<input type="checkbox" name="Clan of Death">Clan of Death<br>
+			<input type="checkbox" name="Cooking">Cooking<br>
+			<input type="checkbox" name="Drums">Drums<br>
+			<input type="checkbox" name="Face Painting">Face Painting<br>
+			<input type="checkbox" name="Family">Family<br>
+			<input type="checkbox" name="Forbidden Dance">Forbidden Dance<br>
+			<input type="checkbox" name="Heart Flute">Heart Flute<br>
+			<input type="checkbox" name="Hovel">Hovel<br>
+			<input type="checkbox" name="Inner Lantern">Inner Lantern<br>
+			<input type="checkbox" name="Language">Language<br>
+			<input type="checkbox" name="Lantern Oven">Lantern Oven<br>
+			<input type="checkbox" name="Momento Mori">Momento Mori<br>
+			<input type="checkbox" name="Nightmare Training">Nightmare Training<br>
+			<input type="checkbox" name="Paint">Paint<br>
+			<input type="checkbox" name="Partnership">Partnership<br>
+			<input type="checkbox" name="Pictograph">Pictograph<br>
+			<input type="checkbox" name="Pottery">Pottery<br>
+			<input type="checkbox" name="Records">Records<br>
+			<input type="checkbox" name="Sacrifice">Sacrifice<br>
+			<input type="checkbox" name="Saga">Saga<br>
+			<input type="checkbox" name="Scrap Smelting">Scrap Smelting<br>
+			<input type="checkbox" name="Scarification">Scarification<br>
+			<input type="checkbox" name="Sculpture">Sculpture<br>
+			<input type="checkbox" name="Shrine">Shrine<br>
+			<input type="checkbox" name="Song of the Brave">Song of the Brave<br>
+			<input type="checkbox" name="Storytelling">Storytelling<br>
+			<input type="checkbox" name="Symposium">Symposium<br>
+		</form>
+		<div>
+			<b>Deck</b>
+			<ol id="deck">
+				<li id="Ammonia"			data-req="Language">Ammonia</li>
+				<li id="Bed"				data-req="Hovel">Bed</li>
+				<li id="Bloodletting"		data-req="Ammonia">Bloodletting</li>
+				<li id="Clan of Death"		data-req="Family">Clan of Death</li>
+				<li id="Cooking"			data-req="Lantern Oven">Cooking</li>
+				<li id="Drums"				data-req="Language">Drums</li>
+				<li id="Face Painting"		data-req="Paint">Face Painting</li>
+				<li id="Family"				data-req="Hovel">Family</li>
+				<li id="Forbidden Dance"	data-req="Drums">Forbidden Dance</li>
+				<li id="Heart Flute"		data-req="Forbidden Dance">Heart Flute</li>
+				<li id="Hovel"				data-req="Language">Hovel</li>
+				<li id="Inner Lantern"		data-req="Language">Inner Lantern</li>
+				<li id="Language"			data-req="">Language</li>
+				<li id="Lantern Oven"		data-req="Ammonia">Lantern Oven</li>
+				<li id="Momento Mori"		data-req="Pictograph">Momento Mori</li>
+				<li id="Nightmare Training" data-req="Symposium">Nightmare Training</li>
+				<li id="Paint"				data-req="Language">Paint</li>
+				<li id="Partnership"		data-req="Hovel">Partnership</li>
+				<li id="Pictograph"			data-req="Paint">Pictograph</li>
+				<li id="Pottery"			data-req="Sculpture">Pottery</li>
+				<li id="Records"			data-req="Storytelling">Records</li>
+				<li id="Sacrifice"			data-req="Shrine">Sacrifice</li>
+				<li id="Saga"				data-req="Song of the Brave">Saga</li>
+				<li id="Scrap Smelting"		data-req="Lantern Oven">Scrap Smelting</li>
+				<li id="Scarification"		data-req="Inner Lantern">Scarification</li>
+				<li id="Sculpture"			data-req="Paint">Sculpture</li>
+				<li id="Shrine"				data-req="Inner Lantern">Shrine</li>
+				<li id="Song of the Brave"	data-req="Drums">Song of the Brave</li>
+				<li id="Storytelling"		data-req="Symposium">Storytelling</li>
+				<li id="Symposium"			data-req="Language">Symposium</li>
+			</ol>
+		</div>
+	</div>
+</body>
+</html>

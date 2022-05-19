@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Holdfast Combat Helper</title>
+	<style type="text/css">
+		h4, h3 { margin-top: 0px; margin-bottom: 5px; }
+		img.grid { margin: 3px; border: none; }
+		span.box { font-size: small; }
+		p.info { font-size: 90%; }
+		td.itemslots { font-size: 80%; font-weight: bold; text-align: left; }
+	</style>
+</head>
+
+<script>
+function rollD10C(){ // Combat die
+	// Roll die and get Initiative
+	var d10 = Math.floor(Math.random() * 10) + 1;
+	var init = document.getElementById("init").value;
+	var baseEdmg = 0;
+	var basePdmg = 0;
+	var actions = "";
+	
+	// Check damage results
+	if (init < -10) {
+		baseEdmg = 1;
+		basePdmg = 7;
+		if (d10 == 10 || d10 == 1 || d10 == 2 || d10 == 7 || d10 == 8) {
+			actions = actions + " Claw ";
+		}
+		if (d10 == 3 || d10 == 6) {
+			actions = actions + " Attack ";
+		}
+		if (d10 == 3 || d10 == 5 || d10 == 6 || d10 == 8 || d10 == 9) {
+			actions = actions + " Defense ";
+		}
+		if (d10 == 4 || d10 == 5 || d10 == 7 || d10 == 9) {
+			actions = actions + " Maneuver ";
+		}
+		if (d10 == 4) {
+			actions = actions + " Gambit ";
+		}
+	}
+	else if (init == -10 || init == -9) {
+		baseEdmg = 1;
+		basePdmg = 6;
+		if (d10 == 10 || d10 == 1|| d10 == 5 || d10 == 9) {
+			actions = actions + " Claw ";
+		}
+		if (d10 == 3 || d10 == 5 || d10 == 7) {
+			actions = actions + " Attack ";
+		}
+		if (d10 == 2 || d10 == 3 || d10 == 4 || d10 == 6 || d10 == 7 || d10 == 8) {
+			actions = actions + " Defense ";
+		}
+		if (d10 == 2 || d10 == 4 || d10 == 6 || d10 == 8) {
+			actions = actions + " Maneuver ";
+		}
+		if (d10 == 9) {
+			actions = actions + " Gambit ";
+		}
+	}
+	else if (init == -8 || init == -7) {
+		baseEdmg = 2;
+		basePdmg = 5;
+		if (d10 == 10 || d10 == 4 || d10 == 6) {
+			actions = actions + " Claw ";
+		}
+		if (d10 == 1 || d10 == 2 || d10 == 4 || d10 == 7) {
+			actions = actions + " Attack ";
+		}
+		if (d10 == 1 || d10 == 3 || d10 == 5 || d10 == 7 || d10 == 8) {
+			actions = actions + " Defense ";
+		}
+		if (d10 == 2 || d10 == 5 || d10 == 6 || d10 == 8) {
+			actions = actions + " Maneuver ";
+		}
+		if (d10 == 3) {
+			actions = actions + " Gambit ";
+		}
+		if (d10 == 9) {
+			actions = actions + " Any ";
+		}
+	}
+	else if (init == -6 || init == -5) {
+		baseEdmg = 2;
+		basePdmg = 4;
+		if (d10 == 10 || d10 == 3 || d10 == 7) {
+			actions = actions + " Claw ";
+		}
+		if (d10 == 2 || d10 == 5 || d10 == 6 || d10 == 7) {
+			actions = actions + " Attack ";
+		}
+		if (d10 == 1 || d10 == 2 || d10 == 4 || d10 == 5 || d10 == 8) {
+			actions = actions + " Defense ";
+		}
+		if (d10 == 1 || d10 == 3 || d10 == 4 || d10 == 8) {
+			actions = actions + " Maneuver ";
+		}
+		if (d10 == 6) {
+			actions = actions + " Gambit ";
+		}
+		if (d10 == 9) {
+			actions = actions + " Any ";
+		}
+	}
+	else if (init == -4 || init == -3) {
+		baseEdmg = 3;
+		basePdmg = 4;
+		if (d10 == 10 || d10 == 2 || d10 == 3) {
+			actions = actions + " Claw ";
+		}
+		if (d10 == 1 || d10 == 5 || d10 == 6 || d10 == 8) {
+			actions = actions + " Attack ";
+		}
+		if (d10 == 1 || d10 == 2 || d10 == 4 || d10 == 6 || d10 == 7) {
+			actions = actions + " Defense ";
+		}
+		if (d10 == 3 || d10 == 4 || d10 == 5 || d10 == 8) {
+			actions = actions + " Maneuver ";
+		}
+		if (d10 == 7) {
+			actions = actions + " Gambit ";
+		}
+		if (d10 == 9) {
+			actions = actions + " Any ";
+		}
+	}
+	else if (init == -2 || init == -1) {
+		baseEdmg = 3;
+		basePdmg = 3;
+		if (d10 == 10 || d10 == 1 || d10 == 3) {
+			actions = actions + " Claw ";
+		}
+		if (d10 == 4 || d10 == 6 || d10 == 7 || d10 == 8) {
+			actions = actions + " Attack ";
+		}
+		if (d10 == 2 || d10 == 3 || d10 == 5 || d10 == 6 || d10 == 8) {
+			actions = actions + " Defense ";
+		}
+		if (d10 == 1 || d10 == 2 || d10 == 4 || d10 == 7) {
+			actions = actions + " Maneuver ";
+		}
+		if (d10 == 5) {
+			actions = actions + " Gambit ";
+		}
+		if (d10 == 9) {
+			actions = actions + " Any ";
+		}
+	}
+	else if (init == 0) {
+		baseEdmg = 3;
+		basePdmg = 2;
+		if (d10 == 10 || d10 == 1 || d10 == 2) {
+			actions = actions + " Claw ";
+		}
+		if (d10 == 3 || d10 == 6 || d10 == 7 || d10 == 8) {
+			actions = actions + " Attack ";
+		}
+		if (d10 == 1 || d10 == 3 || d10 == 4 || d10 == 5) {
+			actions = actions + " Defense ";
+		}
+		if (d10 == 4 || d10 == 5 || d10 == 6 || d10 == 8) {
+			actions = actions + " Maneuver ";
+		}
+		if (d10 == 2 || d10 == 7) {
+			actions = actions + " Gambit ";
+		}
+		if (d10 == 9) {
+			actions = actions + " Any ";
+		}
+	}
+	else if (init == 1 || init == 2) {
+		baseEdmg = 4;
+		basePdmg = 2;
+		if (d10 == 10 || d10 == 2 || d10 == 4) {
+			actions = actions + " Claw ";
+		}
+		if (d10 == 1 || d10 == 5 || d10 == 6 || d10 == 7 || d10 == 8) {
+			actions = actions + " Attack ";
+		}
+		if (d10 == 3 || d10 == 5 || d10 == 6 || d10 == 7) {
+			actions = actions + " Defense ";
+		}
+		if (d10 == 1 || d10 == 2 || d10 == 3 || d10 == 4) {
+			actions = actions + " Maneuver ";
+		}
+		if (d10 == 8) {
+			actions = actions + " Gambit ";
+		}
+		if (d10 == 9) {
+			actions = actions + " Any ";
+		}
+	}
+	else if (init == 3 || init == 4) {
+		baseEdmg = 5;
+		basePdmg = 2;
+		if (d10 == 10 || d10 == 4 || d10 == 7) {
+			actions = actions + " Claw ";
+		}
+		if (d10 == 2 || d10 == 3 || d10 == 4 || d10 == 7 || d10 == 8) {
+			actions = actions + " Attack ";
+		}
+		if (d10 == 1 || d10 == 3 || d10 == 5 || d10 == 6) {
+			actions = actions + " Defense ";
+		}
+		if (d10 == 2 || d10 == 5 || d10 == 6 || d10 == 8) {
+			actions = actions + " Maneuver ";
+		}
+		if (d10 == 1) {
+			actions = actions + " Gambit ";
+		}
+		if (d10 == 9) {
+			actions = actions + " Any ";
+		}
+	}
+	else if (init == 5 || init == 6) {
+		baseEdmg = 6;
+		basePdmg = 2;
+		if (d10 == 10 || d10 == 3 || d10 == 8) {
+			actions = actions + " Claw ";
+		}
+		if (d10 == 1 || d10 == 4 || d10 == 5 || d10 == 7 || d10 == 8) {
+			actions = actions + " Attack ";
+		}
+		if (d10 == 1 || d10 == 2 || d10 == 6 || d10 == 7) {
+			actions = actions + " Defense ";
+		}
+		if (d10 == 2 || d10 == 3 || d10 == 5 || d10 == 6) {
+			actions = actions + " Maneuver ";
+		}
+		if (d10 == 4) {
+			actions = actions + " Gambit ";
+		}
+		if (d10 == 9) {
+			actions = actions + " Any ";
+		}
+	}
+	else if (init == 7 || init == 8) {
+		baseEdmg = 7;
+		basePdmg = 1;
+		if (d10 == 10 || d10 == 1 || d10 == 4) {
+			actions = actions + " Claw ";
+		}
+		if (d10 == 1 || d10 == 2 || d10 == 6 || d10 == 7 || d10 == 8) {
+			actions = actions + " Attack ";
+		}
+		if (d10 == 2 || d10 == 3 || d10 == 4 || d10 == 7) {
+			actions = actions + " Defense ";
+		}
+		if (d10 == 3 || d10 == 5 || d10 == 6 || d10 == 8) {
+			actions = actions + " Maneuver ";
+		}
+		if (d10 == 5) {
+			actions = actions + " Gambit ";
+		}
+		if (d10 == 9) {
+			actions = actions + " Any ";
+		}
+	}
+	else if (init == 9 || init == 10) {
+		baseEdmg = 8;
+		basePdmg = 1;
+		if (d10 == 10 || d10 == 7) {
+			actions = actions + " Claw ";
+		}
+		if (d10 == 2 || d10 == 3 || d10 == 5 || d10 == 6 || d10 == 7) {
+			actions = actions + " Attack ";
+		}
+		if (d10 == 1 || d10 == 3 || d10 == 4 || d10 == 5) {
+			actions = actions + " Defense ";
+		}
+		if (d10 == 10 || d10 == 1 || d10 == 2 || d10 == 4) {
+			actions = actions + " Maneuver ";
+		}
+		if (d10 == 6) {
+			actions = actions + " Gambit ";
+		}
+		if (d10 == 8 || d10 == 9) {
+			actions = actions + " Any ";
+		}
+	}
+	else if (init > 10) {
+		baseEdmg = 9;
+		basePdmg = 1;
+		if (d10 == 10) {
+			actions = actions + " Claw ";
+		}
+		if (d10 == 10 || d10 == 1 || d10 == 2 || d10 == 3 || d10 == 6) {
+			actions = actions + " Attack ";
+		}
+		if (d10 == 2 || d10 == 4 || d10 == 5) {
+			actions = actions + " Defense ";
+		}
+		if (d10 == 1 || d10 == 3 || d10 == 5 || d10 == 6) {
+			actions = actions + " Maneuver ";
+		}
+		if (d10 == 4) {
+			actions = actions + " Gambit ";
+		}
+		if (d10 == 7 || d10 == 8 || d10 == 9) {
+			actions = actions + " Any ";
+		}
+	}
+	
+	actions = actions.replace("  ", " or ");
+	actions = actions.replace("Claw or", "Claw and");
+	
+	// Display roll
+	document.getElementById("rolled").innerHTML = "Rolled <b>"+d10+"</b>.";
+	document.getElementById("bed").innerHTML = baseEdmg;
+	document.getElementById("bdp").innerHTML = basePdmg;
+	document.getElementById("aa").innerHTML = actions;
+}
+
+function rollD(faces){
+	// Roll die and display roll
+	var dieroll = Math.floor(Math.random() * faces) + 1;
+	document.getElementById("dieroll").innerHTML = "You rolled a D" +faces+ " with a result of: <b>"+dieroll+"</b>.";
+}
+
+// Set item detail objects for itemDetails() (below)
+var allItems = {
+	"None": { SaleValue: "", Type: "", Slot: "", Attack: "", Defense: "", Maneuver: "", Gambit: "", Effects: "" },
+	"Alfvattin": { SaleValue: "", Type: "Item", Slot: "", Attack: "", Defense: "", Maneuver: "", Gambit: "", Effects: "+1 Initiative" },
+	"Amulet of Beastly Strength": { SaleValue: "15 gold", Type: "Amulet", Slot: "Amulet", Attack: "", Defense: "", Maneuver: "", Gambit: "", Effects: "+2 Damage" },
+	"Amulet of Leathery Hide": { SaleValue: "10 gold", Type: "Amulet", Slot: "Amulet", Attack: "", Defense: "", Maneuver: "", Gambit: "", Effects: "+5 Armor" },
+	"Armor Fortification":			{ SaleValue: "",				Type: "Enchantment",	Slot: "",		Attack: "",						Defense: "",		Maneuver: "",		Gambit: "Replace: +2 Guard",		Effects: "" },
+	"Awareness Salts":				{ SaleValue: "",				Type: "Item",			Slot: "",		Attack: "",						Defense: "",		Maneuver: "",		Gambit: "",		Effects: "+2 Initiative" },
+	"Axewall Rib-Tickler Knife":	{ SaleValue: "10 gold",			Type: "Dagger",			Slot: "1H",		Attack: "+2 Damage",			Defense: "+2 Initiative",		Maneuver: "+2 Initiative",		Gambit: "+1 Damage, +2 Initiative",		Effects: "" },
+	"Balanced Knife":				{ SaleValue: "6 silver",		Type: "Dagger",			Slot: "1H",		Attack: "+1 Damage",			Defense: "+1 Initiative",		Maneuver: "+2 Initiative",		Gambit: "+1d4 Initiative",		Effects: "" },
+	"Battler's Shield":				{ SaleValue: "25 gold",		Type: "Shield",				Slot: "1H",		Attack: "+1 Initiative",		Defense: "+2 Guard",		Maneuver: "+1 Guard, +1 Initiative",		Gambit: "",		Effects: "" },
+	"Bearpaw Hammer":				{ SaleValue: "4 gold",			Type: "Hammer",			Slot: "2H",		Attack: "+2 Damage, +1 Initiative",		Defense: "+1 Initiative",		Maneuver: "+2 Damage",		Gambit: "+1d6 Damage, -2 Initiative",		Effects: "" },
+	"Blazing Enchantment":			{ SaleValue: "",				Type: "Enchantment",	Slot: "",		Attack: "Add: +1 Damage",		Defense: "",		Maneuver: "Add: Convert Maneuver to Gambit",		Gambit: "",		Effects: "-2 Morale" },
+	"Blinding Flares":				{ SaleValue: "",				Type: "Item",				Slot: "",		Attack: "",		Defense: "",		Maneuver: "",		Gambit: "Stun/1 Round",		Effects: "" },
+	"Blood Tonic":					{ SaleValue: "",				Type: "Item",				Slot: "",		Attack: "",		Defense: "",		Maneuver: "",		Gambit: "",		Effects: "+2 Heal, Cure Poison" },
+	"Blood-Dark Obsidian Gauntlets":{ SaleValue: "+d20 gold/month",	Type: "Gauntlets",				Slot: "Hands",		Attack: "+2 Poison/3 Rounds",		Defense: "",		Maneuver: "",		Gambit: "+1d8 Life Steal",		Effects: "+5 Armor, -1 Morale" },
+	"Bloodbound Plate Armor":		{ SaleValue: "+d10 gold/month",	Type: "Breastplate",				Slot: "Chest",		Attack: "",		Defense: "+3 Heal",		Maneuver: "",		Gambit: "",		Effects: "+25 Armor" },
+	"Bold Cloak":					{ SaleValue: "",				Type: "Cloak",				Slot: "Cloak",		Attack: "",		Defense: "",		Maneuver: "",		Gambit: "",		Effects: "+1d10 Leadership Untrained" },
+	"Boots of Gentle Whispers":		{ SaleValue: "20 gold",			Type: "Boots",				Slot: "Boots",		Attack: "",		Defense: "",		Maneuver: "Select Any",		Gambit: "",		Effects: "+1 Armor" },
+	"Boots of the Elder Wolf":	{ SaleValue: "+d20 gold/month",	Type: "Boots",	Slot: "Boots",	Attack: "+3 Damage",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+1 Any Untrained" },
+	"Buckler Shield":	{ SaleValue: "",	Type: "Shield",	Slot: "1H",	Attack: "",	Defense: "+2 Guard",	Maneuver: "+1 Damage, +1 Initiative",	Gambit: "",	Effects: "" },
+	"Burning Sand":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+3 Damage, +1 Initiative" },
+	"Caltrops":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "Prevent/2 Rounds",	Effects: "" },
+	"Cloak of Drunkenness":	{ SaleValue: "15 gold",	Type: "Cloak",	Slot: "Cloak",	Attack: "",	Defense: "+1 Initiative",	Maneuver: "",	Gambit: "+2 Initiative",	Effects: "" },
+	"Conflagration Shield":	{ SaleValue: "+d6 gold/month",	Type: "Shield",	Slot: "1H",	Attack: "",	Defense: "+3 Guard",	Maneuver: "+1 Guard, +2 Initiative",	Gambit: "+1 Guard, +3 Damage",	Effects: "+5 Armor" },
+	"Crossroads Armor":	{ SaleValue: "+d12 gold/month",	Type: "Breastplate",	Slot: "Chest",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+20 Armor" },
+	"Crossroads Banners":	{ SaleValue: "",	Type: "Structure",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+1 Morale" },
+	"Crossroads Mace":	{ SaleValue: "+d20 gold/month",	Type: "Mace",	Slot: "2H",	Attack: "+2 Damage, +1 Initiative",	Defense: "+1 Initiative",	Maneuver: "+1 Damage, +1 Initiative",	Gambit: "+2 Damage, +2 Initiative",	Effects: "" },
+	"Crossroads Serving Amulet":	{ SaleValue: "+d4 gold/month",	Type: "Amulet",	Slot: "Amulet",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "" },
+	"Dark-Breaker's Helm":	{ SaleValue: "+d8 gold/month",	Type: "Helm",	Slot: "Head",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+15 Armor, +1 Morale" },
+	"Deep Titan Gauntlets":	{ SaleValue: "+d20 gold/month",	Type: "Gauntlets",	Slot: "Hands",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+5 Armor, +1 Skill" },
+	"Descending Blade":	{ SaleValue: "35 gold",	Type: "Sword",	Slot: "1H",	Attack: "+4 Damage",	Defense: "+1 Damage",	Maneuver: "+2 Damage",	Gambit: "+2 Damage, +1 Initiative",	Effects: "" },
+	"Dexterous Reaver's Sword":	{ SaleValue: "5 gold (15 for set)",	Type: "Sword",	Slot: "1H",	Attack: "+2 Damage",	Defense: "+1 Damage, +1 Initiative",	Maneuver: "+1 Initiative",	Gambit: "+2 Bleed/3 Rounds",	Effects: "" },
+	"Diamond Legion Boots":	{ SaleValue: "+d20 gold/month",	Type: "Boots",	Slot: "Boots",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+4 Armor, +1 Skill" },
+	"Divining Gauntlets":	{ SaleValue: "",	Type: "Gauntlets",	Slot: "Hands",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+1d10 Scrounging Bonus" },
+	"Dragon's Fists":	{ SaleValue: "10 gold",	Type: "Mace",	Slot: "2H",	Attack: "+2 Damage, +1 Fire/3 Rounds",	Defense: "+1 Initiative",	Maneuver: "+1 Initiative",	Gambit: "+2 Fire/3 Rounds",	Effects: "" },
+	"Dragonleather Armor":	{ SaleValue: "",	Type: "Breastplate",	Slot: "Chest",	Attack: "",	Defense: "",	Maneuver: "+3 Initiative",	Gambit: "",	Effects: "+5 Armor" },
+	"Elfwar Helm":	{ SaleValue: "35 gold",	Type: "Helm",	Slot: "Head",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "+2 Guard",	Effects: "+3 Armor" },
+	"Elisavel's Letter":	{ SaleValue: "20 gold",	Type: "Treasure",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "" },
+	"Elite Sprinter's Boots":	{ SaleValue: "35 gold",	Type: "Boots",	Slot: "Boots",	Attack: "",	Defense: "",	Maneuver: "+2 Initiative",	Gambit: "+3 Initiative, Prevent/1 Round",	Effects: "+5 Armor" },
+	"Embersword":	{ SaleValue: "35 gold",	Type: "Sword",	Slot: "1H",	Attack: "+2 Damage",	Defense: "+2 Initiative",	Maneuver: "+2 Initiative",	Gambit: "+1d6 Fire",	Effects: "" },
+	"Enchanted Edgework":	{ SaleValue: "",	Type: "Enchantment",	Slot: "",	Attack: "Add: +1 Damage",	Defense: "",	Maneuver: "",	Gambit: "Add: +1 Damage",	Effects: "" },
+	"Enchanted Goggles":	{ SaleValue: "",	Type: "Helm",	Slot: "Helm",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+2 Initiative" },
+	"Endurance Training Research":	{ SaleValue: "",	Type: "Bonus",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+10 Defense Permanent" },
+	"Enduring Gauntlets":	{ SaleValue: "20 gold",	Type: "Gauntlets",	Slot: "Hands",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "+1 Guard",	Effects: "+3 Armor" },
+	"Feast Supplies":	{ SaleValue: "",	Type: "Structure",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+1 Morale" },
+	"Fighting Style Research":	{ SaleValue: "",	Type: "Bonus",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+1 Skill Permanent" },
+	"Fire Oils":	{ SaleValue: "1 gold",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+1d4 Fire/3 Rounds" },
+	"Fire Oils (2)":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+2 Fire/3 Rounds" },
+	"First Aid Kit":	{ SaleValue: "1 silver",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+6 Heal" },
+	"Firstwall Waking Water":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+3 Initiative" },
+	"Fist and a Half Axe":	{ SaleValue: "8 silver",	Type: "Axe",	Slot: "2H",	Attack: "+3 Damage",	Defense: "+1 Damage",	Maneuver: "+1 Initiative, -2 Damage",	Gambit: "+6 Damage, -4 Initiative",	Effects: "" },
+	"Flickering Knife":	{ SaleValue: "15 gold",	Type: "Dagger",	Slot: "1H",	Attack: "+2 Damage",	Defense: "+1 Damage",	Maneuver: "+1 Damage, +1 Initiative",	Gambit: "+4 Damage, -2 Initiative",	Effects: "" },
+	"Flintbreaker Armor":	{ SaleValue: "+d10 gold/month",	Type: "Breastplate",	Slot: "Chest",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+20 Armor" },
+	"Flintbreaker Masterwork Armor":	{ SaleValue: "+d20 gold/month",	Type: "Breastplate",	Slot: "Chest",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "1d4 Boon",	Effects: "+20 Armor" },
+	"Flintbreaker Shield":	{ SaleValue: "25 gold",	Type: "Shield",	Slot: "1H",	Attack: "+1 Damage, +1 Initiative",	Defense: "+2 Guard",	Maneuver: "+1 Guard",	Gambit: "",	Effects: "" },
+	"Floodwader Boots":	{ SaleValue: "",	Type: "Boots",	Slot: "Boots",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "Item/1 Round",	Effects: "" },
+	"Foe-Cutting Blade":	{ SaleValue: "1 gold",	Type: "Sword",	Slot: "1H",	Attack: "+2 Damage",	Defense: "+1 Damage, +1 Initiative",	Maneuver: "+2 Initiative",	Gambit: "+2 Bleed/3 Rounds",	Effects: "" },
+	"Forgebreaker":	{ SaleValue: "+d20 gold/month",	Type: "Axe",	Slot: "2H",	Attack: "+5 Damage",	Defense: "+2 Damage",	Maneuver: "+1 Initiative",	Gambit: "+10 Damage, -4 Initiative",	Effects: "" },
+	"Fortified Bandages":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+5 Heal, +1 Initiative" },
+	"Fortifying Rations":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+5 Defense Temporary (Adventure)" },
+	"Four-Copper Knife":	{ SaleValue: "5 silver",	Type: "Dagger",	Slot: "1H",	Attack: "+1 Damage",	Defense: "+1 Initiative",	Maneuver: "+1 Initiative",	Gambit: "Action Choice",	Effects: "" },
+	"Frigid Weaponmark":	{ SaleValue: "",	Type: "Enchantment",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "Replace: +5 Initiative",	Effects: "" },
+	"Frostbiter Sword":	{ SaleValue: "+d6 gold/month",	Type: "Sword",	Slot: "1H",	Attack: "",	Defense: "+1 Damage",	Maneuver: "+1 Initiative, +2 Damage",	Gambit: "+5 Initiative",	Effects: "" },
+	"Goblet":	{ SaleValue: "5 gold",	Type: "Treasure",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "" },
+	"Goblin Knife":	{ SaleValue: "5 gold",	Type: "Dagger",	Slot: "1H",	Attack: "+1 Damage",	Defense: "+1 Damage",	Maneuver: "+1 Damage, +1 Initiative",	Gambit: "+1d4 Poison/3 Rounds",	Effects: "" },
+	"Godsforge Full Helm":	{ SaleValue: "+d20 gold/month",	Type: "Helm",	Slot: "Head",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "1d4 Boon",	Effects: "+5 Armor" },
+	"Greenshine":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+2 Initiative, -1 Self Poison/3 Rounds" },
+	"Gremlin's Luckstone":	{ SaleValue: "1 gold",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "Re-Roll any Die" },
+	"Halefist Dagger":	{ SaleValue: "1 gold",	Type: "Dagger",	Slot: "1H",	Attack: "+2 Damage",	Defense: "+1 Initiative",	Maneuver: "+2 Initiative",	Gambit: "+3 Bleed/3 Rounds",	Effects: "" },
+	"Halefist Sword":	{ SaleValue: "8 silver",	Type: "Sword",	Slot: "1H",	Attack: "+2 Damage",	Defense: "+2 Damage, +1 Initiative",	Maneuver: "+2 Initiative",	Gambit: "+2 Bleed/3 Rounds",	Effects: "" },
+	"Hamramma's Hammer":	{ SaleValue: "+d12 gold/month",	Type: "Hammer",	Slot: "2H",	Attack: "+2 Damage, +1 Initiative",	Defense: "+1 Initiative",	Maneuver: "+1 Damage, +1 Initiative",	Gambit: "+3 Damage",	Effects: "" },
+	"Healing Kits":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+8 Heal" },
+	"Helm of Dancing Lights":	{ SaleValue: "20 gold",	Type: "Helm",	Slot: "Head",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "Stun/2 Rounds",	Effects: "+2 Armor" },
+	"Helm of Divine Wrath":	{ SaleValue: "+d10 gold/month",	Type: "Helm",	Slot: "Helm",	Attack: "Add: +2 Initiative",	Defense: "",	Maneuver: "",	Gambit: "+2 Initiative, +3 Damage",	Effects: "+5 Armor" },
+	"Helm of the Black Mile":	{ SaleValue: "",	Type: "Helm",	Slot: "Helm",	Attack: "Add: +1 Damage",	Defense: "+2 Guard",	Maneuver: "",	Gambit: "",	Effects: "+5 Armor" },
+	"Helm of Timeless Reckoning":	{ SaleValue: "+d20 gold/month",	Type: "Helm",	Slot: "Helm",	Attack: "",	Defense: "+3 Initiative",	Maneuver: "",	Gambit: "",	Effects: "+5 Armor" },
+	"Highland Rich":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+1 Damage/5 Rounds, -1 Initiative/5 Rounds" },
+	"Holdmark Armor":	{ SaleValue: "",	Type: "Breastplate",	Slot: "Chest",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "+3 Guard",	Effects: "+10 Armor" },
+	"Holdmark Belt":	{ SaleValue: "",	Type: "Belt",	Slot: "Belt",	Attack: "+1 Initiative",	Defense: "1 Guard",	Maneuver: "+1 Initiative",	Gambit: "+1 Initiative, +5 Heal",	Effects: "" },
+	"Holdmark Boots":	{ SaleValue: "",	Type: "Boots",	Slot: "Boots",	Attack: "",	Defense: "+2 Guard",	Maneuver: "",	Gambit: "",	Effects: "+2 Armor" },
+	"Holdmark Elite Axe":	{ SaleValue: "",	Type: "Axe",	Slot: "2H",	Attack: "+4 Damage",	Defense: "+2 Damage",	Maneuver: "+1 Initiative, -1 Damage",	Gambit: "+6 Damage, -1 Initiative",	Effects: "" },
+	"Holdmark Gauntlets":	{ SaleValue: "",	Type: "Gauntlets",	Slot: "Hands",	Attack: "",	Defense: "+1 Guard",	Maneuver: "",	Gambit: "",	Effects: "+3 Armor" },
+	"Holdmark Helm":	{ SaleValue: "",	Type: "Helm",	Slot: "Helm",	Attack: "",	Defense: "",	Maneuver: "+1 Guard",	Gambit: "",	Effects: "+4 Armor" },
+	"Holdmark Shield":	{ SaleValue: "",	Type: "Shield",	Slot: "1H",	Attack: "+1 Guard",	Defense: "+2 Guard",	Maneuver: "+2 Guard",	Gambit: "Prevent/1 Round",	Effects: "" },
+	"Holdmark Sword":	{ SaleValue: "",	Type: "Sword",	Slot: "1H",	Attack: "+2 Damage",	Defense: "+2 Damage",	Maneuver: "+1 Damage, +1 Initiative",	Gambit: "+2 Bleed/3 Rounds",	Effects: "" },
+	"Holdmaster's Ring":	{ SaleValue: "Absolutely not for sale.",	Type: "Ring",	Slot: "Ring",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+1 Morale" },
+	"Ill-Favored Halberd":	{ SaleValue: "6 silver",	Type: "Spear",	Slot: "2H",	Attack: "+4 Damage, -1 Initiative",	Defense: "+1 Guard, -1 Initiative",	Maneuver: "+2 Guard",	Gambit: "+2 Bleed/3 Rounds",	Effects: "" },
+	"Knifeturner's Shield":	{ SaleValue: "25 gold",	Type: "Shield",	Slot: "1H",	Attack: "",	Defense: "+2 Guard",	Maneuver: "+1 Guard, +1 Initiative",	Gambit: "+2 Guard",	Effects: "" },
+	"Lashaya's Helm":	{ SaleValue: "10 gold",	Type: "Helm",	Slot: "Head",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+3 Armor" },
+	"Laughing Knife":	{ SaleValue: "20 gold",	Type: "Dagger",	Slot: "1H",	Attack: "+1 Damage",	Defense: "+2 Damage, -1 Initiative",	Maneuver: "+2 Initiative",	Gambit: "+1 Damage, +1 Initiative",	Effects: "" },
+	"Left Flanking Knife":	{ SaleValue: "7 silver",	Type: "Dagger",	Slot: "1H",	Attack: "+1 Damage",	Defense: "+1 Initiative",	Maneuver: "+2 Initiative",	Gambit: "+1 Initiative, +1 Damage",	Effects: "" },
+	"Major Enchanted Ruby":	{ SaleValue: "45 gold",	Type: "Treasure",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "" },
+	"Mark of Fortification":	{ SaleValue: "",	Type: "Enchantment",	Slot: "",	Attack: "",	Defense: "Replace: +1 Guard",	Maneuver: "",	Gambit: "Replace: +1 Guard",	Effects: "+5 Armor" },
+	"Mawguard Boots":	{ SaleValue: "15 gold",	Type: "Boots",	Slot: "Boots",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+6 Armor" },
+	"Mismatched Gauntlets":	{ SaleValue: "15 gold",	Type: "Gauntlets",	Slot: "Hands",	Attack: "",	Defense: "+2 Guard, -1 Initiative",	Maneuver: "",	Gambit: "",	Effects: "+2 Armor" },
+	"Pacing Boots":	{ SaleValue: "5 gold",	Type: "Boots",	Slot: "Boots",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+4 Armor" },
+	"Poison Lacquer Kit":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+2 Poison/3 Rounds" },
+	"Poisoned Gauntlets":	{ SaleValue: "+d8 gold/month",	Type: "Gauntlets",	Slot: "Hands",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "+1d4 Poison",	Effects: "" },
+	"Radiant Gauntlets":	{ SaleValue: "+d10 gold/month",	Type: "Gauntlets",	Slot: "Hands",	Attack: "",	Defense: "+2 Guard",	Maneuver: "",	Gambit: "+1d4 Fire/2 Rounds",	Effects: "+3 Armor" },
+	"Rage potions":	{ SaleValue: "10 gold",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+3 Damage, +10 Armor, -4 Guard/3 Rounds" },
+	"Reference: Bardsong":	{ SaleValue: "",	Type: "Bonus",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+Bardsong" },
+	"Reference: Dark Lore":	{ SaleValue: "",	Type: "Bonus",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+Dark Lore" },
+	"Reference: Kroach":	{ SaleValue: "",	Type: "Bonus",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+Kroach" },
+	"Right Flanking Knife":	{ SaleValue: "7 silver",	Type: "Dagger",	Slot: "1H",	Attack: "+2 Damage",	Defense: "+1 Initiative",	Maneuver: "+2 Initiative",	Gambit: "+1 Bleed/3 Rounds",	Effects: "" },
+	"Royal Oaken Club":	{ SaleValue: "15 gold",	Type: "Club",	Slot: "1H",	Attack: "+3 Damage",	Defense: "",	Maneuver: "Stun",	Gambit: "+2 Damage, +1 Initiative",	Effects: "Cannot be used with Fire Oils" },
+	"Scale Armor":	{ SaleValue: "",	Type: "Breastplate",	Slot: "Chest",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+5 Armor" },
+	"Sentry's Shield":	{ SaleValue: "25 gold",	Type: "Shield",	Slot: "1H",	Attack: "",	Defense: "+2 Guard",	Maneuver: "+1 Initiative",	Gambit: "Use 2 Items, -2 Initiative",	Effects: "" },
+	"Shadedark Knife":	{ SaleValue: "+d6 gold/month",	Type: "Dagger",	Slot: "1H",	Attack: "+2 Damage, +1 Initiative",	Defense: "+1 Guard, -1 Initiative",	Maneuver: "+2 Initiative",	Gambit: "+1 Bleed/3 Rounds, +1 Initiative",	Effects: "" },
+	"Sharpening Charm":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+1 Damage/5 Rounds" },
+	"Shield of the Unflinching":	{ SaleValue: "+d20 gold/month",	Type: "Shield",	Slot: "1H",	Attack: "+1 Damage",	Defense: "+2 Guard",	Maneuver: "+1 Guard, +1 Initiative",	Gambit: "+2 Bleed/3 Rounds",	Effects: "" },
+	"Shieldgnawing Axe":	{ SaleValue: "10 gold",	Type: "Axe",	Slot: "2H",	Attack: "+4 Damage",	Defense: "+1 Damage",	Maneuver: "+1 Initiative, -1 Damage",	Gambit: "+8 Damage, -4 Initiative",	Effects: "" },
+	"Shining Kingsilver Flail":	{ SaleValue: "10 gold",	Type: "Flail",	Slot: "2H",	Attack: "+3 Damage",	Defense: "+1 Damage",	Maneuver: "+1 Initiative, +1 Damage",	Gambit: "Stun/1 Round",	Effects: "" },
+	"Sifrun's Breath":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "+4 Damage, -2 Guard/3 Rounds",	Effects: "" },
+	"Sinister Reaver's Sword":	{ SaleValue: "5 gold (15 for set)",	Type: "Sword",	Slot: "1H",	Attack: "+1 Damage",	Defense: "+1 Damage, +1 Initiative",	Maneuver: "+3 Initiative",	Gambit: "+1 Guard",	Effects: "" },
+	"Six Claw Hara-moks":	{ SaleValue: "5 silver",	Type: "Fist",	Slot: "2H",	Attack: "+2 Damage, +1 Poison/3 Rounds",	Defense: "+1 Initiative",	Maneuver: "+2 Initiative",	Gambit: "+1d4 Poison/3 Rounds",	Effects: "" },
+	"Slate Cloak":	{ SaleValue: "10 gold",	Type: "Cloak",	Slot: "Cloak",	Attack: "",	Defense: "",	Maneuver: "+1 Guard, +2 Initiative",	Gambit: "",	Effects: "" },
+	"Smoke Bomb":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+1 Initiative" },
+	"Softstrider Armor":	{ SaleValue: "10 gold (40 for set)",	Type: "Breastplate",	Slot: "Chest",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+15 Armor" },
+	"Softstrider Gauntlets":	{ SaleValue: "10 gold (40 for set)",	Type: "Gauntlets",	Slot: "Hands",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+2 Armor" },
+	"Softstrider Helm":	{ SaleValue: "10 gold (40 for set)",	Type: "Helm",	Slot: "Head",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "1d4 Boon",	Effects: "+2 Armor" },
+	"Sparking Weaponmark":	{ SaleValue: "",	Type: "Enchantment",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "Replace: +2 Damage, +3 Inititative",	Effects: "" },
+	"Spear of the Wall":	{ SaleValue: "30 gold",	Type: "Spear",	Slot: "2H",	Attack: "+2 Damage, +1 Initiative",	Defense: "+1 Guard, +2 Initiative",	Maneuver: "+1 Guard, +2 Initiative",	Gambit: "+2 Bleed/3 Rounds",	Effects: "" },
+	"Stalker's Dagger":	{ SaleValue: "15 gold",	Type: "Dagger",	Slot: "1H",	Attack: "+2 Damage",	Defense: "+2 Initiative",	Maneuver: "+2 Initiative",	Gambit: "+2 Damage, +2 Initiative",	Effects: "" },
+	"Stormtaker Shield":	{ SaleValue: "+d8 gold/month",	Type: "Shield",	Slot: "1H",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "+5 Damage, -2 Initiative",	Effects: "Immunity to Electrical damage" },
+	"Stout":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+1 Guard/5 Rounds" },
+	"Survivor's Axe":	{ SaleValue: "+d8 gold/month",	Type: "Axe",	Slot: "2H",	Attack: "+2 Damage, +1 Heal",	Defense: "+1 Heal",	Maneuver: "+1 Initiative, +1 Heal",	Gambit: "+2 Damage, +4 Heal",	Effects: "" },
+	"Sword of Dreaming Shadows":	{ SaleValue: "+d20 gold/month",	Type: "Sword",	Slot: "1H",	Attack: "1 Life Steal",	Defense: "+1 Initiative",	Maneuver: "+1 Initiative",	Gambit: "+1d8 Life Steal",	Effects: "-1 Morale" },
+	"Thrice-Blessed Axe":	{ SaleValue: "35 gold",	Type: "Axe",	Slot: "2H",	Attack: "+3 Damage",	Defense: "+1 Damage",	Maneuver: "+1 Initiative, -1 Damage",	Gambit: "+9 Damage, -4 Initiative",	Effects: "" },
+	"Throwing Knives":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+2 Damage" },
+	"Thumper (Left)":	{ SaleValue: "",	Type: "Fist",	Slot: "1H",	Attack: "+1 Damage",	Defense: "+1 Initiative",	Maneuver: "+2 Initiative",	Gambit: "Prevent/2 Rounds",	Effects: "" },
+	"Thurvik (Right)":	{ SaleValue: "",	Type: "Fist",	Slot: "1H",	Attack: "+2 Damage",	Defense: "+1 Damage",	Maneuver: "+1 Damage",	Gambit: "Action Choice/1 Round",	Effects: "" },
+	"Timeless Ring":	{ SaleValue: "5 gold",	Type: "Ring",	Slot: "Ring",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "1d4 Boon",	Effects: "+2 Armor" },
+	"Torchguard Sword":	{ SaleValue: "30 gold",	Type: "Sword",	Slot: "1H",	Attack: "+3 Damage, +1 Initiative",	Defense: "+1 Guard, +1 Initiative",	Maneuver: "+2 Initiative",	Gambit: "+10 Ancient Evil Bane",	Effects: "" },
+	"Traveler's Dagger":	{ SaleValue: "3 silver",	Type: "Dagger",	Slot: "1H",	Attack: "+2 Damage",	Defense: "+1 Initiative",	Maneuver: "+2 Initiative",	Gambit: "+2 Bleed/3 Rounds",	Effects: "" },
+	"Trollcrusher":	{ SaleValue: "40 gold",	Type: "Hammer",	Slot: "2H",	Attack: "+4 Damage, +1 Initiative",	Defense: "",	Maneuver: "+3 Damage",	Gambit: "Stun/1 Round",	Effects: "" },
+	"Trollsmasher Gauntlet":	{ SaleValue: "35 gold",	Type: "Gauntlets",	Slot: "Hands",	Attack: "",	Defense: "",	Maneuver: "+3 Damage, +1 Initiative",	Gambit: "",	Effects: "" },
+	"Vanguard Armor":	{ SaleValue: "+d8 gold/month",	Type: "Breastplate",	Slot: "Chest",	Attack: "",	Defense: "+2 Guard",	Maneuver: "+1 Guard, +1 Initiative",	Gambit: "",	Effects: "+5 Armor, +1d10 Leadership Untrained" },
+	"Vitality Draught":	{ SaleValue: "",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+5 Defense Permanent" },
+	"Wall-Runners":	{ SaleValue: "+d8 gold/month",	Type: "Boots",	Slot: "Boots",	Attack: "",	Defense: "",	Maneuver: "+1 Initiative",	Gambit: "+1 Initiative",	Effects: "+3 Armor, +d10 Pathfinding Untrained" },
+	"Wardstone":	{ SaleValue: "1 gold",	Type: "Item",	Slot: "",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "",	Effects: "+4 Guard/1 Round" },
+	"Warholder Sword":	{ SaleValue: "5 silver",	Type: "Sword",	Slot: "1H",	Attack: "+1 Damage",	Defense: "+1 Damage, +1 Initiative",	Maneuver: "+1 Initiative",	Gambit: "Prevent/4 Rounds",	Effects: "" },
+	"Westfall Gauntlets":	{ SaleValue: "25 gold",	Type: "Gauntlets",	Slot: "Hands",	Attack: "",	Defense: "+1 Guard",	Maneuver: "",	Gambit: "",	Effects: "+3 Armor" },
+	"Wicked Knife":	{ SaleValue: "5 silver",	Type: "Dagger",	Slot: "1H",	Attack: "+1 Damage",	Defense: "+1 Initiative",	Maneuver: "+2 Initiative",	Gambit: "+1d4 Poison/3 Rounds",	Effects: "" },
+	"Wicked Cutlass":	{ SaleValue: "30 gold",	Type: "Sword",	Slot: "1H",	Attack: "+2 Damage",	Defense: "+1 Initiative",	Maneuver: "+1 Bleed/3 Rounds",	Gambit: "+3 Bleed/3 Rounds",	Effects: "+8 Armor" },
+	"Wooden Ring":	{ SaleValue: "5 gold",	Type: "Ring",	Slot: "Ring",	Attack: "",	Defense: "",	Maneuver: "",	Gambit: "+1 Guard",	Effects: "" },
+	"Worldshaker Warhammer":	{ SaleValue: "+d20 gold/month",	Type: "Hammer",	Slot: "2H",	Attack: "+3 Damage, +1 Initiative",	Defense: "",	Maneuver: "+2 Damage, +1 Initiative",	Gambit: "Stun/1 Round",	Effects: "" }
+};
+	
+function itemDetails(slotOutput) {
+	// Determine selected item and fecth data
+	var selectedItem = document.getElementById(slotOutput);
+	var selectedValue = selectedItem.options[selectedItem.selectedIndex].value;
+	var ObjectImLookingFor = allItems[ selectedValue ];
+	var statDump = "";
+	if (ObjectImLookingFor.Type != "") { statDump = statDump + "<b>Type:</b> " + ObjectImLookingFor.Type; }
+	if (ObjectImLookingFor.Slot != "") { statDump = statDump + " <b>Slot:</b> " + ObjectImLookingFor.Slot; }
+	if (ObjectImLookingFor.SaleValue != "") { statDump = statDump + " <b>Sale value:</b> " + ObjectImLookingFor.SaleValue; }
+	if (ObjectImLookingFor.Attack != "") { statDump = statDump + " <b>Attack:</b> " + ObjectImLookingFor.Attack; }
+	if (ObjectImLookingFor.Defense != "") { statDump = statDump + " <b>Defense:</b> " + ObjectImLookingFor.Defense; }
+	if (ObjectImLookingFor.Maneuver != "") { statDump = statDump + " <b>Maneuver:</b> " + ObjectImLookingFor.Maneuver; }
+	if (ObjectImLookingFor.Gambit != "") { statDump = statDump + " <b>Gambit:</b> " + ObjectImLookingFor.Gambit; }
+	if (ObjectImLookingFor.Effects != "") { statDump = statDump + " <b>Effects:</b> " + ObjectImLookingFor.Effects; }
+	
+	// Display relevant info to appropriate line
+	document.getElementById(slotOutput + "Output").innerHTML = statDump;
+}
+</script>
+
+<body style="background: #dedede; max-width: 1100px;">
+<h3 style="text-align: center;">Holdfast Combat Helper</h3>
+<p>This unofficial tool allows you to resolve combat faster and more easily in Holdfast by managing your stats and your rolls onscreen. You can save this as an HTML document to use it offline, but values are <b>not</b> persistent. This is not a character sheet.</p>
+
+<div id="main" style="float: left; max-width: 550px;">
+	<h4 style="text-align: center;">Combat Roller</h4>
+	<p class="info">Enter your Initiative and click the D10 button below to instantly get the resulting damage and possible actions.</p>
+	
+	<div>
+		Initiative: <input type="number" id="init" value="0" style="width: 50px;" />
+		<button onclick="rollD10C()">Roll D10</button> <span id="rolled"></span>
+	</div>
+	
+	<table border="0" style="margin-bottom: 15px;">
+		<tr>
+			<td>Base <b>Enemy</b> damage:</td>
+			<td><b id="bed"></b></td>
+		</tr>
+		<tr>
+			<td>Base <b>Player</b> damage:</td>
+			<td><b id="bdp"></b></td>
+		</tr>
+		<tr>
+			<td>Available actions:</td>
+			<td><b id="aa"></b></td>
+		</tr>
+		<tr>
+			<td colspan=2>Enemy Defense: <input type="number" id="enemydef" value="0" style="width: 50px;" /> Claw: <input type=text size=20 /></td>
+		</tr>
+	</table>
+	
+	<h4 style="text-align: center;">Defense Tracker</h4>
+	<p class="info">You can keep track of your Defense in the text areas below, but please note that these values are <b>not saved</b> and will be lost if you leave or refresh the page.</p>
+	
+	<p>Current: <input type="number" id="curdef" value="0" style="width: 50px;" />&nbsp;&nbsp;&nbsp;&nbsp;Maximum: <input type="number" id="maxdef" value="0" style="width: 50px;" />&nbsp;&nbsp;&nbsp;&nbsp;Armor: <input type="number" id="armor" value="0" style="width: 50px;" /></p>
+	
+	<h4 style="text-align: center;">Dice</h4>
+	<p class="info">You can roll dice with the following buttons. Boon effects follow for easy reference (pick any equal to or lower than your roll, when appropriate).</p>
+	
+	<p><button onclick="rollD(4)">Roll D4</button><button onclick="rollD(6)">Roll D6</button><button onclick="rollD(8)">Roll D8</button><button onclick="rollD(10)">Roll D10</button><button onclick="rollD(12)">Roll D12</button><button onclick="rollD(20)">Roll D20</button><button onclick="rollD(100)">Roll D100</button></p>
+	
+	<div id="dieroll"></div>
+	<p style="text-align: center; margin-bottom: -5px;"><b>Boons</b></p>
+	<p style="font-size: 90%;">
+		1: Prevent/4 Rounds<br />
+		2: +2 Initiative<br />
+		3: +3 Damage<br />
+		4: +1d4 Heal<br />
+		5: +1 Damage, +1d4 Heal<br />
+		6: +1 Item<br />
+		7: +1d6 Damage, +1d6 Heal<br />
+		8: +1d6 Damage, +1d6 Heal, +1d6 Initiative<br />
+		9: +4 Guard<br />
+		10: Select Any/1 Round<br />
+		11: +1d8 Heal, +3 Bleed/3 Rounds<br />
+		12: +1d8 Initiative, +1d8 Damage<br />
+		13: +4 Guard, Prevent/4 Rounds<br />
+		14: +1d8 Initiative, +1d8 Damage, +1d8 Heal<br />
+		15: +1d10 Initiative, +4 Guard<br />
+		16: +1d10 Damage, Prevent/4 Rounds<br />
+		17: +1d12 Initiative, +1d12 Damage, +1d12 Heal<br />
+		18: Select Any/2 Rounds<br />
+		19: +1d12 Damage, Full Defense Restored<br />
+		20: Victory
+	</p>
+</div>
+
+<div id="inventory" style="float: right; max-width: 500px;">
+	<h4 style="text-align: center;">Inventory</h4>
+	<p class="info">You can pick and display your equipped and carried items here for reference. Please note that these values <b>will not be saved</b> and will be lost if you close this page.</p>
+	
+	<div>
+	<table>
+		<tr><td class="itemslots">Left Hand:</td><td><select id="LeftHand" onchange="itemDetails(this.id)">
+			<option value="None">None</option>
+			<option value="Alfvattin">Alfvattin</option>
+			<option value="Amulet of Beastly Strength">Amulet of Beastly Strength</option>
+			<option value="Amulet of Leathery Hide">Amulet of Leathery Hide</option>
+			<option value="Armor Fortification">Armor Fortification</option>
+			<option value="Awareness Salts">Awareness Salts</option>
+			<option value="Axewall Rib-Tickler Knife">Axewall Rib-Tickler Knife</option>
+			<option value="Balanced Knife">Balanced Knife</option>
+			<option value="Battler's Shield">Battler's Shield</option>
+			<option value="Bearpaw Hammer">Bearpaw Hammer</option>
+			<option value="Blazing Enchantment">Blazing Enchantment</option>
+			<option value="Blinding Flares">Blinding Flares</option>
+			<option value="Blood Tonic">Blood Tonic</option>
+			<option value="Blood-Dark Obsidian Gauntlets">Blood-Dark Obsidian Gauntlets</option>
+			<option value="Bloodbound Plate Armor">Bloodbound Plate Armor</option>
+			<option value="Bold Cloak">Bold Cloak</option>
+			<option value="Boots of Gentle Whispers">Boots of Gentle Whispers</option>
+			<option value="Boots of the Elder Wolf">Boots of the Elder Wolf</option>
+			<option value="Buckler Shield">Buckler Shield</option>
+			<option value="Burning Sand">Burning Sand</option>
+			<option value="Caltrops">Caltrops</option>
+			<option value="Cloak of Drunkenness">Cloak of Drunkenness</option>
+			<option value="Conflagration Shield">Conflagration Shield</option>
+			<option value="Crossroads Armor">Crossroads Armor</option>
+			<option value="Crossroads Banners">Crossroads Banners</option>
+			<option value="Crossroads Mace">Crossroads Mace</option>
+			<option value="Crossroads Serving Amulet">Crossroads Serving Amulet</option>
+			<option value="Dark-Breaker's Helm">Dark-Breaker's Helm</option>
+			<option value="Deep Titan Gauntlets">Deep Titan Gauntlets</option>
+			<option value="Descending Blade">Descending Blade</option>
+			<option value="Dexterous Reaver's Sword">Dexterous Reaver's Sword</option>
+			<option value="Diamond Legion Boots">Diamond Legion Boots</option>
+			<option value="Divining Gauntlets">Divining Gauntlets</option>
+			<option value="Dragon's Fists">Dragon's Fists</option>
+			<option value="Dragonleather Armor">Dragonleather Armor</option>
+			<option value="Elfwar Helm">Elfwar Helm</option>
+			<option value="Elisavel's Letter">Elisavel's Letter</option>
+			<option value="Elite Sprinter's Boots">Elite Sprinter's Boots</option>
+			<option value="Embersword">Embersword</option>
+			<option value="Enchanted Edgework">Enchanted Edgework</option>
+			<option value="Enchanted Goggles">Enchanted Goggles</option>
+			<option value="Endurance Training Research">Endurance Training Research</option>
+			<option value="Enduring Gauntlets">Enduring Gauntlets</option>
+			<option value="Feast Supplies">Feast Supplies</option>
+			<option value="Fighting Style Research">Fighting Style Research</option>
+			<option value="Fire Oils">Fire Oils</option>
+			<option value="Fire Oils (2)">Fire Oils (2)</option>
+			<option value="First Aid Kit">First Aid Kit</option>
+			<option value="Firstwall Waking Water">Firstwall Waking Water</option>
+			<option value="Fist and a Half Axe">Fist and a Half Axe</option>
+			<option value="Flickering Knife">Flickering Knife</option>
+			<option value="Flintbreaker Armor">Flintbreaker Armor</option>
+			<option value="Flintbreaker Masterwork Armor">Flintbreaker Masterwork Armor</option>
+			<option value="Flintbreaker Shield">Flintbreaker Shield</option>
+			<option value="Floodwader Boots">Floodwader Boots</option>
+			<option value="Foe-Cutting Blade">Foe-Cutting Blade</option>
+			<option value="Forgebreaker">Forgebreaker</option>
+			<option value="Fortified Bandages">Fortified Bandages</option>
+			<option value="Fortifying Rations">Fortifying Rations</option>
+			<option value="Four-Copper Knife">Four-Copper Knife</option>
+			<option value="Frigid Weaponmark Enchantment">Frigid Weaponmark Enchantment</option>
+			<option value="Frostbiter Sword">Frostbiter Sword</option>
+			<option value="Goblet">Goblet</option>
+			<option value="Goblin Knife">Goblin Knife</option>
+			<option value="Godsforge Full Helm">Godsforge Full Helm</option>
+			<option value="Greenshine">Greenshine</option>
+			<option value="Gremlin's Luckstone">Gremlin's Luckstone</option>
+			<option value="Halefist Dagger">Halefist Dagger</option>
+			<option value="Halefist Sword">Halefist Sword</option>
+			<option value="Hamramma's Hammer">Hamramma's Hammer</option>
+			<option value="Hammer">Hammer</option>
+			<option value="Healing Kits">Healing Kits</option>
+			<option value="Helm of Dancing Lights">Helm of Dancing Lights</option>
+			<option value="Helm of Divine Wrath">Helm of Divine Wrath</option>
+			<option value="Helm of the Black Mile">Helm of the Black Mile</option>
+			<option value="Helm of Timeless Reckoning">Helm of Timeless Reckoning</option>
+			<option value="Highland Rich">Highland Rich</option>
+			<option value="Holdmark Armor">Holdmark Armor</option>
+			<option value="Holdmark Belt">Holdmark Belt</option>
+			<option value="Holdmark Boots">Holdmark Boots</option>
+			<option value="Holdmark Elite Axe">Holdmark Elite Axe</option>
+			<option value="Holdmark Gauntlets">Holdmark Gauntlets</option>
+			<option value="Holdmark Helm">Holdmark Helm</option>
+			<option value="Holdmark Shield">Holdmark Shield</option>
+			<option value="Holdmark Sword">Holdmark Sword</option>
+			<option value="Holdmaster's Ring">Holdmaster's Ring</option>
+			<option value="Ill-Favored Halberd">Ill-Favored Halberd</option>
+			<option value="Knifeturner's Shield">Knifeturner's Shield</option>
+			<option value="Lashaya's Helm">Lashaya's Helm</option>
+			<option value="Laughing Knife">Laughing Knife</option>
+			<option value="Left Flanking Knife">Left Flanking Knife</option>
+			<option value="Major Enchanted Ruby">Major Enchanted Ruby</option>
+			<option value="Mark of Fortification">Mark of Fortification</option>
+			<option value="Mawguard Boots">Mawguard Boots</option>
+			<option value="Mismatched Gauntlets">Mismatched Gauntlets</option>
+			<option value="Pacing Boots">Pacing Boots</option>
+			<option value="Poison Lacquer Kit">Poison Lacquer Kit</option>
+			<option value="Poisoned Gauntlets">Poisoned Gauntlets</option>
+			<option value="Radiant Gauntlets">Radiant Gauntlets</option>
+			<option value="Rage potions">Rage potions</option>
+			<option value="Reference: Bardsong">Reference: Bardsong</option>
+			<option value="Reference: Dark Lore">Reference: Dark Lore</option>
+			<option value="Reference: Kroach">Reference: Kroach</option>
+			<option value="Right Flanking Knife">Right Flanking Knife</option>
+			<option value="Royal Oaken Club">Royal Oaken Club</option>
+			<option value="Scale Armor">Scale Armor</option>
+			<option value="Sentry's Shield">Sentry's Shield</option>
+			<option value="Shadedark Knife">Shadedark Knife</option>
+			<option value="Sharpening Charm">Sharpening Charm</option>
+			<option value="Shield of the Unflinching">Shield of the Unflinching</option>
+			<option value="Shieldgnawing Axe">Shieldgnawing Axe</option>
+			<option value="Shining Kingsilver Flail">Shining Kingsilver Flail</option>
+			<option value="Sifrun's Breath">Sifrun's Breath</option>
+			<option value="Sinister Reaver's Sword">Sinister Reaver's Sword</option>
+			<option value="Six Claw Hara-moks">Six Claw Hara-moks</option>
+			<option value="Slate Cloak">Slate Cloak</option>
+			<option value="Smoke Bomb">Smoke Bomb</option>
+			<option value="Softstrider Armor">Softstrider Armor</option>
+			<option value="Softstrider Gauntlets">Softstrider Gauntlets</option>
+			<option value="Softstrider Helm">Softstrider Helm</option>
+			<option value="Sparking Weaponmark">Sparking Weaponmark</option>
+			<option value="Spear of the Wall">Spear of the Wall</option>
+			<option value="Stalker's Dagger">Stalker's Dagger</option>
+			<option value="Stormtaker Shield">Stormtaker Shield</option>
+			<option value="Stout">Stout</option>
+			<option value="Survivor's Axe">Survivor's Axe</option>
+			<option value="Sword of Dreaming Shadows">Sword of Dreaming Shadows</option>
+			<option value="Thrice-Blessed Axe">Thrice-Blessed Axe</option>
+			<option value="Throwing Knives">Throwing Knives</option>
+			<option value="Thumper (Left)">Thumper (Left)</option>
+			<option value="Thurvik (Right)">Thurvik (Right)</option>
+			<option value="Timeless Ring">Timeless Ring</option>
+			<option value="Torchguard Sword">Torchguard Sword</option>
+			<option value="Traveler's Dagger">Traveler's Dagger</option>
+			<option value="Trollcrusher">Trollcrusher</option>
+			<option value="Trollsmasher Gauntlet">Trollsmasher Gauntlet</option>
+			<option value="Vanguard Armor">Vanguard Armor</option>
+			<option value="Vitality Draught">Vitality Draught</option>
+			<option value="Wall-Runners">Wall-Runners</option>
+			<option value="Wardstone">Wardstone</option>
+			<option value="Warholder Sword">Warholder Sword</option>
+			<option value="Westfall Gauntlets">Westfall Gauntlets</option>
+			<option value="Wicked Knife">Wicked Knife</option>
+			<option value="Wooden">Wooden</option>
+			<option value="Worldshaker Warhammer">Worldshaker Warhammer</option>
+		</select></td></tr>
+		<tr><td colspan=2 id="LeftHandOutput" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Right Hand:</td>	<td><select id="RightHand" onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="RightHandOutput" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Spare:</td>		<td><select id="Spare" 	onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="SpareOutput" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Body:</td>		<td><select id="Body" 	onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="BodyOutput" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Helmet:</td>	<td><select id="Helmet" 	onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="HelmetOutput" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Boots:</td>		<td><select id="Boots" 	onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="BootsOutput" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Gloves:</td>	<td><select id="Gloves" 	onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="GlovesOutput" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Belt:</td>		<td><select id="Belt" 	onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="BeltOutput" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Amulet:</td>	<td><select id="Amulet" 	onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="AmuletOutput" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Ring 1:</td>	<td><select id="Ring1" 		onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="Ring1Output" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Ring 2:</td>	<td><select id="Ring2" 		onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="Ring2Output" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Cloak:</td>		<td><select id="Cloak" 	onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="CloakOutput" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Bag 1:</td>	<td><select id="Bag1" 		onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="Bag1Output" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Bag 2:</td>	<td><select id="Bag2" 		onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="Bag2Output" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Bag 3:</td>	<td><select id="Bag3" 		onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="Bag3Output" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Bag 4:</td>	<td><select id="Bag4" 		onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="Bag4Output" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Bag 5:</td>	<td><select id="Bag5" 		onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="Bag5Output" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Bag 6:</td>	<td><select id="Bag6" 		onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="Bag6Output" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Bag 7:</td>	<td><select id="Bag7" 		onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="Bag7Output" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Bag 8:</td>	<td><select id="Bag8" 		onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="Bag8Output" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Bag 9:</td>	<td><select id="Bag9" 		onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="Bag9Output" style="font-size: 70%;"></td></tr>
+		<tr><td class="itemslots">Bag 10:</td>	<td><select id="Bag10" 	onchange="itemDetails(this.id)"></select></td></tr>
+		<tr><td colspan=2 id="Bag10Output" style="font-size: 70%;"></td></tr>
+	</table>
+		<script>
+			var cln = document.getElementById("LeftHand").innerHTML;
+			document.getElementById("RightHand").innerHTML = cln;
+			document.getElementById("Spare").innerHTML = cln;
+			document.getElementById("Body").innerHTML = cln;
+			document.getElementById("Helmet").innerHTML = cln;
+			document.getElementById("Boots").innerHTML = cln;
+			document.getElementById("Gloves").innerHTML = cln;
+			document.getElementById("Belt").innerHTML = cln;
+			document.getElementById("Amulet").innerHTML = cln;
+			document.getElementById("Ring1").innerHTML = cln;
+			document.getElementById("Ring2").innerHTML = cln;
+			document.getElementById("Cloak").innerHTML = cln;
+			document.getElementById("Bag1").innerHTML = cln;
+			document.getElementById("Bag2").innerHTML = cln;
+			document.getElementById("Bag3").innerHTML = cln;
+			document.getElementById("Bag4").innerHTML = cln;
+			document.getElementById("Bag5").innerHTML = cln;
+			document.getElementById("Bag6").innerHTML = cln;
+			document.getElementById("Bag7").innerHTML = cln;
+			document.getElementById("Bag8").innerHTML = cln;
+			document.getElementById("Bag9").innerHTML = cln;
+			document.getElementById("Bag10").innerHTML = cln;
+		</script>
+	</div>
+</div>
+
+<div style="clear: both;"></div>
+
+<p id="footer" class="info" style="margin-top: 50px; text-align: center;">
+	<span style="color: grey; margin-right: 15px;" title="New in this update: everything">Holdfast Combat Helper v.<b>1.0</b> (March 22, 2015) designed by <a href="http://academagia.invisionzone.com/index.php?showuser=23265" title="Contact me">Salvatos</a><br />
+	<span style="color: grey; margin-right: 15px;">This tool relies entirely on JavaScript, so it must be enabled in your browser settings.</span>
+</p>
+</body>
+</html>
