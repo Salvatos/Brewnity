@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en"><!--  -->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta charset="utf-8" />
+	<title>Kanka Mapping Aid</title>
+<meta name="description" content="Polygon-making helper for Kanka maps" />
+	<link href="css/poole.css" type="text/css" rel="stylesheet">
+	<link href="css/hyde.css" type="text/css" rel="stylesheet">
+	<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+pre { font-size: small; }
+</style>
+
+<script>
+function flipCoords() {
+	// Extract image size from viewBox
+	var viewBox = document.getElementById("input").value.match(/viewBox="0 0 (\d+) (\d+)">/);
+	var imgWidth = viewBox[1];
+	var imgHeight = viewBox[2];
+	console.log("Detected width " + imgWidth + " and height " + imgHeight);
+
+	// Extract all coordinates from input into array
+	var coords1 = document.getElementById("input").value.match(/\d+\.\d+,\d+\.\d+/g);
+
+	// Remove duplicates
+	var coords2 = uniq(coords1);
+	function uniq(a) {
+		return Array.from(new Set(a));
+	}
+	console.log("Isolated " + coords2.length + " unique vertices (out of " + coords1.length + ")");
+
+	// Unless we have a very simple path or requested...
+	if (document.getElementById("ellipse").checked == true || coords2.length < 12) {
+		console.log("All unique vertices maintained");
+	}
+	// ...prune vertices for better map performance
+	else {
+		// Remove 4 vertices from every other position from very long sets
+		if (coords2.length > 100) {
+			var cutAt = 1;
+			var cutOut = 4;
+			var cutStep = 1;
+		}
+		// Remove 2 vertices from every other position from long sets
+		else if (coords2.length > 30) {
+			var cutAt = 1;
+			var cutOut = 2;
+			var cutStep = 1;
+		}
+		// Remove every 3rd vertex from medium sets
+		else {
+			var cutAt = 2;
+			var cutOut = 1;
+			var cutStep = 2;
+		}
+		while (cutAt < coords2.length) {
+			coords2.splice(cutAt, cutOut);
+			cutAt += cutStep;
+		}
+		console.log("Stripped down to " + coords2.length + " vertices");
+	}
+
+	// Clear Output in case this isn’t the first conversion
+	document.getElementById("output").innerHTML = "";
+	// And why not clear Input for the next batch
+	document.getElementById("input").value = "";
+
+	// Iterate through array and flip X and Y, inverting latitude
+	coords2.forEach(function flipXY(item){
+		coords = item.split(",");
+		document.getElementById("output").innerHTML += " " + Number((imgHeight - coords[1]).toFixed(2)) + "," + coords[0];
+	});
+
+	// Remove the extra space at the front
+	document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.trim();
+	document.getElementById("hidden-output").innerHTML = document.getElementById("output").innerHTML;
+}
+
+// Clipboard copy shenanigans
+function copyToClippy() {
+	var copyText = document.getElementById("hidden-output");
+	copyText.select();
+	copyText.setSelectionRange(0, 99999);
+	document.execCommand("copy");
+	document.getElementById("copyTooltip").innerHTML = "Added to clipboard";
+}
+function outFunc() {
+	var tooltip = document.getElementById("copyTooltip");
+	tooltip.innerHTML = "Copy to clipboard";
+}
+</script>
+
+</head>
+<body class="">
+	<div class="content container">
+      <div class="page">
+  <h1>Kanka Mapping Aid</h1>
+  <p>This handy tool will help you quickly find the right coordinates for a polygon marker on your <a href="https://kanka.io" target="_blank" rel="nofollow noopener noreferrer" class="external-link no-image">Kanka</a> map by just pointing and clicking on the desired points of your source image and doing a bit of copy-pasting. Please see the step-by-step instructions under the form below and don’t miss the important notes at the bottom.</p>
+<p><strong>Input (SVG path):</strong></p>
+<div><textarea id="input" style="width: 100%;" rows="5"></textarea>
+<button onclick="flipCoords()">Convert</button><input type="checkbox" id="ellipse"><label for="ellipse">Ellipse</label></div>
+<p><br />
+<strong>Output (Leaflet polygon):</strong></p>
+<div><pre id="output"></pre><textarea id="hidden-output" style="position: absolute; left: -100%;"></textarea><div class="tooltip"><button onclick="copyToClippy()" onmouseout="outFunc()"><span class="tooltiptext" id="copyTooltip">Copy to clipboard</span>Copy coordinates</button></div></div>
+<hr />
+<h3>Instructions</h3>
+<p>First, we need to generate an "SVG path", which describes a shape’s outline in a way a computer can understand. If you are familiar with this and already know how to get the shape you want in SVG format, you can start at step 5 below. If not, GIMP will make it easy for you.</p>
+<h4>Step 1</h4>
+<p>Open your image in <a href="https://www.gimp.org/" target="_blank" rel="nofollow noopener noreferrer" class="external-link no-image">GIMP</a> (a free, cross-platform image editing program), making sure to use the same resolution as the image you uploaded to Kanka.</p>
+<h4>Step 2</h4>
+<p>Create a freehand selection of the area you want to cover with the <em>Lasso</em> tool (<strong>F</strong>). Keep your shape as simple as possible to improve map performance; try to click specific points that will be joined by straight lines rather than drawing a pixel-perfect perimeter. Other selection tools can also be used for simple shapes.</p>
+<h4>Step 3</h4>
+<p>Open the <strong>Select</strong> menu and click <em>To path</em>.</p>
+<h4>Step 4</h4>
+<p>Go to the <strong>Path</strong> tab/dialog (it might not be opened by default, <a href="https://docs.gimp.org/en/gimp-path-dialog.html#gimp-path-dialog-activate" target="_blank" rel="nofollow noopener noreferrer" class="external-link no-image">check your panel options</a>) and right-click the path you just created. Select <em>Export Path</em> and choose a file name and location.</p>
+<h4>Step 5</h4>
+<p>Open the SVG file you just created with a simple text editor. You will see a few code tags and, more importantly, a long sequence of coordinates:</p>
+<pre><code class="language-html">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+              "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd"&gt;
+
+&lt;svg xmlns="http://www.w3.org/2000/svg"
+     width="69.4444in" height="46.2917in"
+     viewBox="0 0 5000 3333"&gt;
+  &lt;path id="Selection"
+        fill="none" stroke="black" stroke-width="1"
+        d="M 2432.00,2552.00
+           C 2432.00,2552.00 2420.00,2548.00 2420.00,2548.00...</code></pre>
+<h4>Step 6</h4>
+<p>You don’t need to worry about all that, though. Just copy the whole content of the file and paste it into the <strong>Input</strong> field above.</p>
+<h4>Step 7</h4>
+<p>Click <strong>Convert</strong> and your new coordinates will appear in the <strong>Output</strong> field. Just copy-paste them into Kanka's map marker editor in the <em>Custom Shape</em> field and you're good to go.</p>
+<h5><em>Tips and best practice:</em></h5>
+<p>The more complex a shape, the more demanding it is for the viewer’s device to compute your markers. This can be especially problematic for someone viewing a large map with several complex polygons on a mobile device. To avoid excessive bloat, this tool removes several vertices from the SVG path. This should not affect the overall shape of your polygon, but it may result in visible inaccuracies in places. Very simple shapes have fewer or no vertices removed to ensure their integrity, but if you get any particularly bad results, let me know on Kanka’s Discord @Salvatos and I will take a look at your SVG file (no need for the original image) and see how the converter could be improved.</p>
+<p>If you used the elliptical selection tool, you should tick the <em>Ellipse</em> box to preserve all vertices &ndash; your final shape will still appear jagged, however, so you may prefer to use the Circle marker option on Kanka. This setting should <strong>not</strong> be used for hand-drawn shapes as you will end up with hundreds or thousands of vertices per polygon.</p>
+<h4>Last updated: Sep 11, 2020</h4>
+<ul>
+<li>No longer need to flip image before creating paths</li>
+</ul>
+</div>
+    </div>
+    <footer id="footer">
+		<details><summary>UNITY is &copy;&nbsp;2016 <a href="http://unity-rpg.com" target="_blank" class="external-link no-image">ZENSARA STUDIOS</a>. This fansite is not affiliated with nor endorsed by Zensara Studios. <span style="color: #286ba5;">Credits</span></summary>
+		<ul>
+			<li>Site powered by <a href="http://getgrav.org" target="_blank">Grav</a>. The NPC Creator gratefully relies on <a href="https://html2canvas.hertzen.com/" target="_blank">html2canvas</a> for image exports, used under <a href="https://github.com/niklasvh/html2canvas/blob/master/LICENSE">MIT license</a>.</li>
+			<li>Discord and Reddit icons by <a href="https://www.shareicon.net/author/arthur-gareginyan" target="_blank">Arthur Gareginyan via shareicon.net</a> licensed under <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" title="License text">Creative Commons (Attribution 3.0 Unported)</a>.</li>
+		</ul>
+		</details>
+	</footer>
+</body>
+</html>
