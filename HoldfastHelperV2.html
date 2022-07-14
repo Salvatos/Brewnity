@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Holdfast Helper</title>
+	<link rel="stylesheet" href="HoldfastHelperV2.css" type="text/css" media="all">
+	<script type="text/javascript" src="HoldfastHelperV2.js" defer></script>
+</head>
+
+<body>
+<header>
+	<h3 style="text-align: center;">Holdfast Helper</h3>
+	<div>
+		<p>This unofficial tool lets you track your character stats and equipment, roll dice and resolve combat faster and more easily in Holdfast. You can save this HTML file locally to use it offline, but values are <b>not</b> stored within the file. To save your progress, you can either:</p>
+		<ul style="margin-top: -5px;">
+			<li style="margin-bottom: 5px;">Use local storage with the <em>Save</em> and <em>Load</em> buttons, which is specific to this browser on this device/user account. Note that only one save can exist in local storage, and it may accidentally get deleted if you clear your browser’s cache or history. This feature is disabled when browsing in incognito mode.</li>
+			<li>Export it to a JSON file that can be re-imported from any other device/browser.</li>
+		</ul>
+		<noscript><p class="warning">This tool requires JavaScript, which is not currently enabled in your browser!</p></noscript>
+	</div>
+	<p class="center">
+		<button onclick="saveToStorage('storage')">Save</button> 
+		<button onclick="loadFromStorage()">Load</button> 
+		<button onclick="saveToStorage('clipboard')">Export to clipboard</button> 
+		<button onclick="saveToStorage('download')">Export to file</button> 
+		<button onclick="document.getElementById('file-selector').click()">Import JSON file</button><input type="file" id="file-selector" accept=".json" style="display: none;">
+		<button onclick="toggleInstructions()">Toggle instructions</button> 
+	</p>
+</header>
+
+<main>
+	<section id="character">
+		<h4>Character</h4>
+		<p class="info">Click <em>Create Character</em> to clear your character sheet and get new Defense and Skill values, as well as your starting Copper and equipment. Click <em>Take Wound</em> to adjust your Defense scores and Glory when your Defense reaches 0.</p>
+		<p class="center">
+			<button onclick="createCharacter()">Create Character</button> 
+			<button onclick="createCharacter(true)">Easy mode (max values)</button> 
+			<button onclick="applyWound()">Take Wound</button>
+		</p>
+		<output id="WoundFeedback" class="center"></output>
+	
+		<section class="char-stats-grid">
+			<p>Defense:</p>
+			<input type="number" id="CurrentDefense" value="0" />
+			<p>Max Defense:</p>
+			<input type="number" id="MaxDefense" value="0" />
+			<p>Armor:</p>
+			<input type="number" id="Armor" value="0" />
+			
+			<p>Skill:</p>
+			<input type="number" id="Skill" value="0" />
+			<p>Morale:</p>
+			<input type="number" id="Morale" value="0" />
+			<p>Glory:</p>
+			<input type="number" id="Glory" value="0" />
+		</section>
+		
+		<details>
+			<summary>Backgrounds</summary>
+			<input type="checkbox" id="Bardsong">&nbsp;<label for="Bardsong">Bardsong</label><br />
+			<p class="background-desc">Gain a d6 boon after each adventure</p>
+			<input type="checkbox" id="DarkBreaker">&nbsp;<label for="DarkBreaker">Dark-breaker</label><br />
+			<input type="checkbox" id="Forgecraft">&nbsp;<label for="Forgecraft">Forgecraft</label><br />
+			<p class="background-desc">May use Forgecrafting rules from Setting Guide, Appendix&nbsp;8</p>
+			<input type="checkbox" id="Healing">&nbsp;<label for="Healing">Healing</label><br />
+			<p class="background-desc">Heal 2 Defense after every combat</p>
+			<input type="checkbox" id="KroachKin">&nbsp;<label for="KroachKin">Kroach-kin</label><br />
+			<p class="background-desc">+1 Skill &amp; Damage against orcs</p>
+			<input type="checkbox" id="Leadership">&nbsp;<label for="Leadership">Leadership</label><br />
+			<p class="background-desc">+1 Morale at game start</p>
+			<input type="checkbox" id="Mechanics">&nbsp;<label for="Mechanics">Mechanics</label><br />
+			<p class="background-desc">Gain a d4 boon each time you equip an item slot for the first time</p>
+			<input type="checkbox" id="Pathfinding">&nbsp;<label for="Pathfinding">Pathfinding</label><br />
+			<input type="checkbox" id="Scrounging">&nbsp;<label for="Scrounging">Scrounging</label><br />
+			<p class="background-desc">+1 gold/silver gained whenever you <em>find</em> gold/silver</p>
+			<input type="checkbox" id="Skullduggery">&nbsp;<label for="Skullduggery">Skullduggery</label><br />
+			<p class="background-desc">Test your luck (3) for a free Gambit before combat begins</p>
+			<input type="checkbox" id="WeaponExpert">&nbsp;<label for="WeaponExpert">Weapon Expert</label> <input type="text" id="WeaponExpertise" value="allo" placeholder="Axe, Dagger, Fists, Mace, Spear, Sword, Warhammer" size="34" /><br />
+			<p class="background-desc">+2 Skill when using your weapon of choice</p>
+		</details>
+	</section>
+	<section id="combat">
+		<h4>Combat Tracker</h4>
+		<p class="info">Enter your Initiative and enemy info, then click <em>Start Combat</em> to calculate your current Defense + Armor. Click <em>Roll Initiative</em> each round to see the resulting base damage and available actions. After combat ends, remember to update your current Defense above.</p>
+		
+		<section class="combat-grid">
+			<h5>Enemy</h5>
+			<p class="enemy-defense">Defense:</p> <input type="number" id="EnemyDefense" value="0" />
+			<p class="enemy-skill">Skill:</p> <input type="number" id="EnemySkill" value="0" />
+			<p class="enemy-claw">Claw: <input id="ClawText" type="text" /></p>
+			
+			<h5>Player</h5>
+			<p class="player-defense">Defense:</p> <input type="number" id="CombatDefense" value="0" />
+			<p class="player-ini">Initiative:</p> <input type="number" id="Initiative" value="0" />
+			<p class="player-notes">Notes: <input id="CombatNotes" type="text" /></p>
+			
+			<button class="start-combat" onclick="CombatStart()">Start Combat</button>
+			<button class="roll-ini" onclick="rollCombatDie()">Roll Initiative</button>
+			<p id="CombatRoll"></p>
+			
+			<p class="enemy-damage">Base <b>Enemy</b> damage: <b id="EnemyDamage"></b></p>
+			<p class="player-damage">Base <b>Player</b> damage: <b id="PlayerDamage"></b></p>
+			<p class="available-actions">Available actions: <b id="AvailableActions"></b></p>
+		</section>
+	</section>
+	<section id="boons">
+		<h4>Boons &amp; Dice</h4>
+		<p class="info">Track your boons below, and use them or roll generic dice with the following buttons.</p>
+		
+		<section>
+			<p>d4 boons: <input type="number" id="d4Boons" value="0" /> <button onclick="rollD(4, true)">Use</button> <button onclick="rollD(4)">Roll d4</button></p>
+			<p>d6 boons: <input type="number" id="d6Boons" value="0" /> <button onclick="rollD(6, true)">Use</button> <button onclick="rollD(6)">Roll d6</button></p>
+			<p>d8 boons: <input type="number" id="d8Boons" value="0" /> <button onclick="rollD(8, true)">Use</button> <button onclick="rollD(8)">Roll d8</button></p>
+			<p>d10 boons: <input type="number" id="d10Boons" value="0" /> <button onclick="rollD(10, true)">Use</button> <button onclick="rollD(10)">Roll d10</button></p>
+			<p>d12 boons: <input type="number" id="d12Boons" value="0" /> <button onclick="rollD(12, true)">Use</button> <button onclick="rollD(12)">Roll d12</button></p>
+			<p>d20 boons: <input type="number" id="d20Boons" value="0" /> <button onclick="rollD(20, true)">Use</button> <button onclick="rollD(20)">Roll d20</button></p>
+		</section>
+		
+		<div id="dieroll"></div>
+		<details>
+			<summary>Combat Boons</summary>
+			1: <abbr title=\"Cancel Claw actions for x rounds\">Prevent</abbr>/4 Rounds<br>
+			2: +2 Initiative<br>
+			3: +3 Damage<br>
+			4: +1d4 <abbr title=\"Regain x Defense\">Heal</abbr><br>
+			5: +1 Damage, +1d4 <abbr title=\"Regain x Defense\">Heal</abbr><br>
+			6: +1 <abbr title=\"Optionally use an item in your bag in the current combat phase\">Item</abbr><br>
+			7: +1d6 Damage, +1d6 <abbr title=\"Regain x Defense\">Heal</abbr><br>
+			8: +1d6 Damage, +1d6 <abbr title=\"Regain x Defense\">Heal</abbr>, +1d6 Initiative<br>
+			9: +4 <abbr title=\"Cancel x damage this round\">Guard</abbr><br>
+			10: <abbr title="You may use the specified action immediately">Select</abbr> Any/1 Round<br>
+			11: +1d8 <abbr title=\"Regain x Defense\">Heal</abbr>, +3 <abbr title=\"Inflicts x damage per round, at the start of the round\">Bleed</abbr>/3 Rounds<br>
+			12: +1d8 Initiative, +1d8 Damage<br>
+			13: +4 <abbr title=\"Cancel x damage this round\">Guard</abbr>, <abbr title=\"Cancel Claw actions for x rounds\">Prevent</abbr>/4 Rounds<br>
+			14: +1d8 Initiative, +1d8 Damage, +1d8 <abbr title=\"Regain x Defense\">Heal</abbr><br>
+			15: +1d10 Initiative, +4 <abbr title=\"Cancel x damage this round\">Guard</abbr><br>
+			16: +1d10 Damage, <abbr title=\"Cancel Claw actions for x rounds\">Prevent</abbr>/4 Rounds<br>
+			17: +1d12 Initiative, +1d12 Damage, +1d12 <abbr title=\"Regain x Defense\">Heal</abbr><br>
+			18: <abbr title="You may use the specified action immediately">Select</abbr> Any/2 Rounds<br>
+			19: +1d12 Damage, Full Defense Restored<br>
+			20: Victory
+		</details>
+	</section>
+	<section id="inventory">
+		<h4>Inventory</h4>
+		<p class="info">Select your equipped and carried items to display their effects.</p>
+		<p id="InventoryWarning" style="display: none;">The items equipped to your Left Hand and Right Hand slots require more than 2 hands total!</p>
+		
+		<section class="inventory-grid">
+			<h5>Left Hand:</h5>
+			<select id="LeftHand" data-slots='["1H", "2H"]' onchange="itemDetails(this.id), validateHands()"></select>
+			<output id="LeftHandOutput"><b>Type:</b> Fist <b>Slot:</b> 1H <b>Attack:</b> +1 Damage <b>Defense:</b> +1 Initiative <b>Maneuver:</b> +2 Initiative <b>Gambit:</b> <abbr title="Cancel Claw actions for x rounds">Prevent</abbr>/2 Rounds</output>
+			<h5>Right Hand:</h5>
+			<select id="RightHand" data-slots='["1H", "2H"]' onchange="itemDetails(this.id), validateHands()"></select>
+			<output id="RightHandOutput"><b>Type:</b> Fist <b>Slot:</b> 1H <b>Attack:</b> +2 Damage <b>Defense:</b> +1 Damage <b>Maneuver:</b> +1 Damage <b>Gambit:</b> <abbr title="Choose one or more actions to apply immediately">Action Choice</abbr>/1 Round</output>
+			<h5>Spare:</h5>
+			<select id="Spare" data-slots='["1H", "2H"]' onchange="itemDetails(this.id)"></select>
+			<output id="SpareOutput" style="color: #333;"></output>
+			<h5>Body:</h5>
+			<select id="Body" data-slots='["Chest"]' onchange="itemDetails(this.id)"></select>
+			<output id="BodyOutput"></output>
+			<h5>Helmet:</h5>
+			<select id="Helmet" data-slots='["Head"]' onchange="itemDetails(this.id)"></select>
+			<output id="HelmetOutput"></output>
+			<h5>Boots:</h5>
+			<select id="Boots" data-slots='["Boots"]' onchange="itemDetails(this.id)"></select>
+			<output id="BootsOutput"></output>
+			<h5>Gloves:</h5>
+			<select id="Gloves" data-slots='["Hands"]' onchange="itemDetails(this.id)"></select>
+			<output id="GlovesOutput"></output>
+			<h5>Belt:</h5>
+			<select id="Belt" data-slots='["Belt"]' onchange="itemDetails(this.id)"></select>
+			<output id="BeltOutput"></output>
+			<h5>Amulet:</h5>
+			<select id="Amulet" data-slots='["Amulet"]' onchange="itemDetails(this.id)"></select>
+			<output id="AmuletOutput"></output>
+			<h5>Ring 1:</h5>
+			<select id="Ring1" data-slots='["Ring"]' onchange="itemDetails(this.id)"></select>
+			<output id="Ring1Output"></output>
+			<h5>Ring 2:</h5>
+			<select id="Ring2" data-slots='["Ring"]' onchange="itemDetails(this.id)"></select>
+			<output id="Ring2Output"></output>
+			<h5>Cloak:</h5>
+			<select id="Cloak" data-slots='["Cloak"]' onchange="itemDetails(this.id)"></select>
+			<output id="CloakOutput"></output>
+			<h5>Bag 1:</h5>
+			<select id="Bag1" data-slots='[""]' onchange="itemDetails(this.id)"></select>
+			<output id="Bag1Output"></output>
+			<h5>Bag 2:</h5>
+			<select id="Bag2" data-slots='[""]' onchange="itemDetails(this.id)"></select>
+			<output id="Bag2Output"></output>
+			<h5>Bag 3:</h5>
+			<select id="Bag3" data-slots='[""]' onchange="itemDetails(this.id)"></select>
+			<output id="Bag3Output"></output>
+			<h5>Bag 4:</h5>
+			<select id="Bag4" data-slots='[""]' onchange="itemDetails(this.id)"></select>
+			<output id="Bag4Output"></output>
+			<h5>Bag 5:</h5>
+			<select id="Bag5" data-slots='[""]' onchange="itemDetails(this.id)"></select>
+			<output id="Bag5Output"></output>
+			<h5>Bag 6:</h5>
+			<select id="Bag6" data-slots='[""]' onchange="itemDetails(this.id)"></select>
+			<output id="Bag6Output"></output>
+			<h5>Bag 7:</h5>
+			<select id="Bag7" data-slots='[""]' onchange="itemDetails(this.id)"></select>
+			<output id="Bag7Output"></output>
+			<h5>Bag 8:</h5>
+			<select id="Bag8" data-slots='[""]' onchange="itemDetails(this.id)"></select>
+			<output id="Bag8Output"></output>
+			<h5>Bag 9:</h5>
+			<select id="Bag9" data-slots='[""]' onchange="itemDetails(this.id)"></select>
+			<output id="Bag9Output"></output>
+			<h5>Bag 10:</h5>
+			<select id="Bag10" data-slots='[""]' onchange="itemDetails(this.id)"></select>
+			<output id="Bag10Output"></output>
+			<h5>Unequippable<br />reference:</h5>
+			<select id="NonEquipItem" data-slots='[""]' onchange="itemDetails(this.id)" style="height: min-content;"></select>
+			<output id="NonEquipItemOutput"></output>
+		</section>
+		
+		<h5>Coins: <output id="Coinage"></output> <span class="note">(can be converted 10:1 while in your hold or a city)</span></h5>
+		<section class="coinage-grid">
+			<h5>Copper:</h5> <input type="number" id="Copper" value="0" onchange="coinLimit()" onselectionchange="coinLimit()"/>
+			<h5>Silver:</h5> <input type="number" id="Silver" value="0" onchange="coinLimit()" onselectionchange="coinLimit()" />
+			<h5>Gold:</h5> <input type="number" id="Gold" value="0" onchange="coinLimit()" onselectionchange="coinLimit()" />
+		</section>
+		
+		<h5>Storage:</h5> <textarea id="Storage"></textarea>
+	</section>
+	
+	<section id="player-notes">
+		<h4>Notes <span class="note">(current paragraph, completed adventures, structures, reminders, etc.)</span></h4>
+		<textarea id="Notes"></textarea>
+	</section>
+	
+	<section id="custom-items">
+		<h4>Custom Items</h4>
+		<p class="info">Use this section to create custom items, for example to apply Enchantments to base items. Names are mandatory and must be unique. Click <em>Update</em> to make them available in the appropriate inventory slots (and remove deleted custom items from the dropdowns).</p>
+		<p class="center">
+			<button onclick="addCustomItem()">Add item</button>
+			<button onclick="deleteNamelessItems()">Delete nameless items</button>
+			<button onclick="updateCustomItems()">Update inventory dropdowns</button>
+		</p>
+		<section id="CustomItems"></section>
+	</section>
+</main>
+<footer>
+	<p title="New in this update: basically everything">Holdfast Helper v.<b>2.0</b> (July 13, 2022) designed by <a href="https://github.com/Salvatos/Brewnity" title="Github">Salvatos</a> &ndash; <em><a href="https://ko-fi.com/salvatos" title="Tip me on Ko-fi">Tips</a> motivate me to make more tools like this ❤</em></p>
+</footer>
+</body>
+</html>
