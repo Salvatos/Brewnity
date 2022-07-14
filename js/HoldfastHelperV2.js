@@ -1,10 +1,3 @@
-/*
-- Add a glossary of effects in addition to the abbr’s in items? (For those that come up in Claws and special combat rules.)
-- Some way to track ongoing effects? Write them down in combat notes and refer to round #.
-* Todo: further testing of custom items, saving and loading; better mobile layout (single column for combat fields and custom item fields; properly constrain page width to screen width).
-* Add a toggle near the top to hide all info text
- */
-
 // Set item detail objects for itemDetails() (below)
 const baseItems = {
 	"None": { SaleValue: "", Type: "", Slot: "", Attack: "", Defense: "", Maneuver: "", Gambit: "", Effects: "" },
