@@ -918,24 +918,32 @@ function addCustomItem(item, saved) {
 	let nextIndex = numOfCustomItems + 1;
 	if (item && saved) {
 		document.getElementById("CustomItems").insertAdjacentHTML("beforeend", `
-			<div id="CustomItem${nextIndex}">
+			<div id="CustomItem${nextIndex}" class="custom-item-grid">
 				<h5>Name</h5>
-				<h5>Sale value</h5>
-				<h5>Type</h5>
-				<h5>Slot</h5>
-				<h5>Attack</h5>
-				<h5>Defense</h5>
-				<h5>Maneuver</h5>
-				<h5>Gambit</h5>
-				<h5>Effects</h5>
 				<input type="text" size="8" class="CustomName" value="${item}" />
+				
+				<h5>Sale value</h5>
 				<input type="text" size="8" class="CustomSaleValue" value="${saved.SaleValue}" />
+				
+				<h5>Type</h5>
 				<input type="text" size="8" class="CustomType" value="${saved.Type}" />
+				
+				<h5>Slot</h5>
 				<input type="text" size="8" class="CustomSlot" value="${saved.Slot}" />
+				
+				<h5>Attack</h5>
 				<input type="text" size="8" class="CustomAttack" value="${saved.Attack}" />
+				
+				<h5>Defense</h5>
 				<input type="text" size="8" class="CustomDefense" value="${saved.Defense}" />
+				
+				<h5>Maneuver</h5>
 				<input type="text" size="8" class="CustomManeuver" value="${saved.Maneuver}" />
+				
+				<h5>Gambit</h5>
 				<input type="text" size="8" class="CustomGambit" value="${saved.Gambit}" />
+				
+				<h5>Effects</h5>
 				<input type="text" size="8" class="CustomEffects" value="${saved.Effects}" />
 			</div>
 		`);
