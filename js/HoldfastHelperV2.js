@@ -866,7 +866,7 @@ function updateCustomItems() {
 	// Clear previous state
 	customItems = {};
 	// Loop through tables
-	let customItemTables = document.querySelectorAll("#CustomItems table");
+	let customItemTables = document.querySelectorAll("#CustomItems > div");
 	customItemTables.forEach((item, index) => {
 		let itemName = item.querySelector(".CustomName").value;
 		// Ignore tables with no name
@@ -914,7 +914,7 @@ function updateCustomItems() {
 }
 
 function addCustomItem(item, saved) {
-	let numOfCustomItems = document.querySelectorAll("#CustomItems table").length;
+	let numOfCustomItems = document.querySelectorAll("#CustomItems > div").length;
 	let nextIndex = numOfCustomItems + 1;
 	if (item && saved) {
 		document.getElementById("CustomItems").insertAdjacentHTML("beforeend", `
@@ -975,7 +975,7 @@ function addCustomItem(item, saved) {
 }
 
 function deleteNamelessItems() {
-	let customItemTables = document.querySelectorAll("#CustomItems table");
+	let customItemTables = document.querySelectorAll("#CustomItems > div");
 	customItemTables.forEach((item, index) => {
 		if (item.querySelector(".CustomName").value.length < 1) {
 			item.remove();
