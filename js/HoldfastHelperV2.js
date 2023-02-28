@@ -753,6 +753,7 @@ function saveToStorage(mode) {
 		ClawText: document.getElementById("ClawText").value,
 		CombatDefense: document.getElementById("CombatDefense").value,
 		CombatRoll: `Round ${document.combatRound}: rolled <b>${document.combatRoll}</b>.`,
+		CustomItems: customItems,
 		LeftHand: document.getElementById("LeftHand").value,
 		RightHand: document.getElementById("RightHand").value,
 		Spare: document.getElementById("Spare").value,
@@ -785,8 +786,7 @@ function saveToStorage(mode) {
 		d10Boons: document.getElementById("d10Boons").value,
 		d20Boons: document.getElementById("d20Boons").value,
 		Notes: document.getElementById("Notes").value,
-		CombatNotes: document.getElementById("CombatNotes").value,
-		CustomItems: customItems
+		CombatNotes: document.getElementById("CombatNotes").value
 	};
 	
 	if (mode == "storage") {
@@ -816,22 +816,17 @@ function saveToStorage(mode) {
 }
 
 function loadFromStorage(json) {
-	let saveObject;
-	if (json) {
-		saveObject = JSON.parse(json);
-	}
-	else {
-		saveObject = JSON.parse( localStorage.getItem('Holdfast') );
-	}
+	let saveObject = (json) ? JSON.parse(json) : JSON.parse( localStorage.getItem('Holdfast') );
 	
 	const propNames = Object.getOwnPropertyNames(saveObject);
 	propNames.forEach((name) => {
 		// custom items
 		if (name == "CustomItems") {
 			const items = Object.getOwnPropertyNames(saveObject[name]);
-				items.forEach((item) => {
-					addCustomItem(item, saveObject[name][item]);
-				});
+			items.forEach((item) => {
+				addCustomItem(item, saveObject[name][item]);
+			});
+			updateCustomItems();
 		}
 		// innerHTML
 		else if (name == "CombatRoll") {
@@ -899,7 +894,7 @@ function updateCustomItems() {
 	Object.assign(allItems, baseItems, customItems);
 	buildInventory(allItems);
 	
-	// load intenvory selections
+	// load inventory selections
 	dropdowns.forEach((dropdown, index) => {
 		// If the (custom) item no longer exists, default to None
 		if (dropdown.querySelector("option[value='"+equipped[dropdown.id]+"']")) {
