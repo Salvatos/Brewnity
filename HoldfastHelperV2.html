@@ -82,7 +82,7 @@
 	</section>
 	<section id="combat">
 		<h4>Combat Tracker</h4>
-		<p class="info">Enter your Initiative and enemy info, then click <em>Start Combat</em> to calculate your current Defense + Armor. Click <em>Roll Initiative</em> each round to see the resulting base damage and available actions. After combat ends, remember to update your current Defense above.</p>
+		<p class="info">Enter your Initiative and enemy info, then click <em>Start Combat</em> to calculate your current Defense including Armor. Click <em>Roll Initiative</em> each round to see the resulting base damage and available actions. After combat ends, remember to update your current Defense above.</p>
 		
 		<section class="combat-grid">
 			<h5>Enemy</h5>
@@ -140,6 +140,40 @@
 			18: <abbr title="You may use the specified action immediately">Select</abbr> Any/2 Rounds<br>
 			19: +1d12 Damage, Full Defense Restored<br>
 			20: Victory
+		</details>
+	</section>
+	<section id="adventures">
+		<h4>Act&nbsp;II Adventures</h4>
+		<p class="info">Keep track of which adventures you’ve started or completed during Act&nbsp;II. <em>Tip: There are 23 adventures, and you may only do 5 before starting Act&nbsp;III. If you want to try more without cheating or starting over, consider exporting a save file and naming it something like "Start of Act&nbsp;II" so you can start a future playthrough from this point.</em></p>
+		<details>
+			<summary>Adventures</summary>
+			<p><strong>Equipment, Treasure and Supplies</strong></p>
+			<input type="checkbox" id="Adv_DrownedKing">&nbsp;<label for="Adv_DrownedKing">Axe of the Drowned King</label><br />
+			<input type="checkbox" id="Adv_GrayLords">&nbsp;<label for="Adv_GrayLords">Death Devices of the Gray Lords</label><br />
+			<input type="checkbox" id="Adv_GoblinHoard">&nbsp;<label for="Adv_GoblinHoard">Goblin Hoard</label><br />
+			<input type="checkbox" id="Adv_ShipDamned">&nbsp;<label for="Adv_ShipDamned">Ship of the Damned <em>(bonus PDF)</em></label><br />
+			<input type="checkbox" id="Adv_Shipments">&nbsp;<label for="Adv_Shipments">Shipments to the Hold</label><br />
+			<input type="checkbox" id="Adv_Armorsmith">&nbsp;<label for="Adv_Armorsmith">The Work of the Armorsmith</label><br />
+			<p><strong>Allies</strong></p>
+			<input type="checkbox" id="Adv_Dicemakers">&nbsp;<label for="Adv_Dicemakers">Deal with the Dicemakers</label><br />
+			<input type="checkbox" id="Adv_ZorunBan">&nbsp;<label for="Adv_ZorunBan">King of Zorun Ban</label><br />
+			<input type="checkbox" id="Adv_Shieldrest">&nbsp;<label for="Adv_Shieldrest">Mercenaries of Shieldrest</label><br />
+			<input type="checkbox" id="Adv_MerchantKings">&nbsp;<label for="Adv_MerchantKings">Merchant Kings of the Deeps</label><br />
+			<input type="checkbox" id="Adv_PitFighters">&nbsp;<label for="Adv_PitFighters">Pit-Fighters</label><br />
+			<input type="checkbox" id="Adv_Refugees">&nbsp;<label for="Adv_Refugees">Refugees at the Hold</label><br />
+			<input type="checkbox" id="Adv_Ssahaa">&nbsp;<label for="Adv_Ssahaa">Trog City of Ssahaa</label><br />
+			<input type="checkbox" id="Adv_BattlePriests1">&nbsp;<label for="Adv_BattlePriests1">Wandering Battle Priests&nbsp;I</label><br />
+			<input type="checkbox" id="Adv_BattlePriests2">&nbsp;<label for="Adv_BattlePriests2">Wandering Battle Priests&nbsp;II</label><br />
+			<p><strong>Local Threats and Mysteries</strong></p>
+			<input type="checkbox" id="Adv_BlackGate">&nbsp;<label for="Adv_BlackGate">Cavern of the Black Gate</label><br />
+			<input type="checkbox" id="Adv_RoofCrawlers">&nbsp;<label for="Adv_RoofCrawlers">Labyrinth of the Roof-Crawlers</label><br />
+			<input type="checkbox" id="Adv_SecretCrossroadsHold">&nbsp;<label for="Adv_SecretCrossroadsHold">Secret of Crossroads Hold</label><br />
+			<input type="checkbox" id="Adv_SpiralDelve">&nbsp;<label for="Adv_SpiralDelve">Spiral Delve</label><br />
+			<input type="checkbox" id="Adv_SteelbackMine">&nbsp;<label for="Adv_SteelbackMine">Terror at Steelback Mine</label><br />
+			<input type="checkbox" id="Adv_Tumbledown">&nbsp;<label for="Adv_Tumbledown">Tumbledown</label><br />
+			<p><strong>Final Duty</strong></p>
+			<input type="checkbox" id="Adv_FinalDuty1">&nbsp;<label for="Adv_FinalDuty1">Final Duty&nbsp;I</label><br />
+			<input type="checkbox" id="Adv_FinalDuty2">&nbsp;<label for="Adv_FinalDuty2">Final Duty&nbsp;II <em>(go to 521)</em></label><br />
 		</details>
 	</section>
 	<section id="inventory">
@@ -226,11 +260,11 @@
 			<h5>Gold:</h5> <input type="number" id="Gold" value="0" onchange="coinLimit()" onselectionchange="coinLimit()" />
 		</section>
 		
-		<h5>Storage:</h5> <textarea id="Storage"></textarea>
+		<h5>Outer Vault: <span class="note">(items and coinage kept at Crossroads Hold)</span></h5> <textarea id="Storage"></textarea>
 	</section>
 	
 	<section id="player-notes">
-		<h4>Notes <span class="note">(current paragraph, completed adventures, structures, reminders, etc.)</span></h4>
+		<h4>Notes <span class="note">(current paragraph, available merchants and structures, stored artifacts, etc.)</span></h4>
 		<textarea id="Notes"></textarea>
 	</section>
 	
@@ -246,7 +280,7 @@
 	</section>
 </main>
 <footer>
-	<p title="New in this update: equipped custom items are now properly loaded from save files; buttons change color slightly when activated, so you know they’re properly activated">Holdfast Helper v.<b>2.03</b> (February 28, 2023) designed by <a href="https://github.com/Salvatos/Brewnity" title="Github">Salvatos</a> &ndash; <em><a href="https://ko-fi.com/salvatos" title="Tip me on Ko-fi">Tips</a> motivate me to make more tools like this ❤</em></p>
+	<p title="New in this update: equipped custom items are now properly loaded from save files; adventure tracker added; buttons change color slightly when activated, so you know they’re properly activated">Holdfast Helper v.<b>2.03</b> (February 28, 2023) designed by <a href="https://github.com/Salvatos/Brewnity" title="Github">Salvatos</a> &ndash; <em><a href="https://ko-fi.com/salvatos" title="Tip me on Ko-fi">Tips</a> motivate me to make more tools like this ❤</em></p>
 </footer>
 </body>
 </html>
