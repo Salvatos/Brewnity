@@ -712,7 +712,7 @@ function itemDetails(slotOutput) {
 	statDump = statDump.replace(/Life Steal/g, '<abbr title="Deal x damage and regain as much Defense">Life Steal</abbr>');
 	statDump = statDump.replace(/Material/g, '<abbr title="Can be used between adventures if you are a Forgecrafter; otherwise, only good for selling">Material</abbr>');
 	statDump = statDump.replace(/Poison/g, '<abbr  title="Inflicts x damage per round, at the start of the round">Poison</abbr>');
-	statDump = statDump.replace(/Prevent/g, '<abbr title="Cancel Claw actions for x rounds">Prevent</abbr>');
+	statDump = statDump.replace(/Prevent/g, '<abbr title="Cancel Claw actions for x rounds starting now">Prevent</abbr>');
 	statDump = statDump.replace(/Regenerate/g, '<abbr title="Heals x Defense for y rounds">Regenerate</abbr>');
 	statDump = statDump.replace(/Replace/g, '<abbr title="Replaces one action’s effect with another">Replace</abbr>');
 	statDump = statDump.replace(/Select/g, '<abbr title="You may use the specified action immediately">Select</abbr>');
@@ -785,6 +785,29 @@ function saveToStorage(mode) {
 		d8Boons: document.getElementById("d8Boons").value,
 		d10Boons: document.getElementById("d10Boons").value,
 		d20Boons: document.getElementById("d20Boons").value,
+		Adv_DrownedKing: document.getElementById("Adv_DrownedKing").checked,
+		Adv_GrayLords: document.getElementById("Adv_GrayLords").checked,
+		Adv_Armorsmith: document.getElementById("Adv_Armorsmith").checked,
+		Adv_Shipments: document.getElementById("Adv_Shipments").checked,
+		Adv_GoblinHoard: document.getElementById("Adv_GoblinHoard").checked,
+		Adv_ShipDamned: document.getElementById("Adv_ShipDamned").checked,
+		Adv_BattlePriests1: document.getElementById("Adv_BattlePriests1").checked,
+		Adv_BattlePriests2: document.getElementById("Adv_BattlePriests2").checked,
+		Adv_Dicemakers: document.getElementById("Adv_Dicemakers").checked,
+		Adv_Ssahaa: document.getElementById("Adv_Ssahaa").checked,
+		Adv_Shieldrest: document.getElementById("Adv_Shieldrest").checked,
+		Adv_Refugees: document.getElementById("Adv_Refugees").checked,
+		Adv_MerchantKings: document.getElementById("Adv_MerchantKings").checked,
+		Adv_PitFighters: document.getElementById("Adv_PitFighters").checked,
+		Adv_ZorunBan: document.getElementById("Adv_ZorunBan").checked,
+		Adv_BlackGate: document.getElementById("Adv_BlackGate").checked,
+		Adv_RoofCrawlers: document.getElementById("Adv_RoofCrawlers").checked,
+		Adv_SteelbackMine: document.getElementById("Adv_SteelbackMine").checked,
+		Adv_SecretCrossroadsHold: document.getElementById("Adv_SecretCrossroadsHold").checked,
+		Adv_SpiralDelve: document.getElementById("Adv_SpiralDelve").checked,
+		Adv_Tumbledown: document.getElementById("Adv_Tumbledown").checked,
+		Adv_FinalDuty1: document.getElementById("Adv_FinalDuty1").checked,
+		Adv_FinalDuty2: document.getElementById("Adv_FinalDuty2").checked,
 		Notes: document.getElementById("Notes").value,
 		CombatNotes: document.getElementById("CombatNotes").value
 	};
