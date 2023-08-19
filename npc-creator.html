@@ -164,7 +164,7 @@
 			"&attacks=" +document.getElementById("attacks-in").value.replace(/\n/g, "%0A").replace(/\+/g, "%2B").replace(/\#/g, "%23")+
 			"&abilities="+document.getElementById("abilities-in").value.replace(/\n/g, "%0A").replace(/\+/g, "%2B").replace(/\#/g, "%23");
 
-		document.getElementById("URL-out").innerHTML = querystring;
+		document.getElementById("URL-out").innerHTML = window.location.hostname+window.location.pathname = "?name=" + document.getElementById("name-in").value + "...";
 		document.getElementById("URL-out").href = "http://" + querystring;
 	}
 	function makeIMG() { // for export
@@ -452,6 +452,12 @@
 		<details>
 			<summary>Unity NPC Creator v.1.2 <span style="color: #286ba5;">Changelog</span></summary>
 			<ul class="release-notes">
+				<li><b>v.1.4</b> (2023-08-19)<br />
+					<ul>
+						<li>Added unordered list styling for the Tactics & Abilities block (margins and bullets).</li>
+						<li>Fixed the export URL link getting weird when the NPC sheet contained certain HTML tags.</li>
+					</ul>
+				</li>
 				<li><b>v.1.3</b> (2022-06-01)<br />
 					<ul>
 						<li>Moved to Github. All features should be operational.</li>
@@ -462,6 +468,8 @@
 						<li>Added a tip from the rulebook regarding attributes relative to Danger Level.</li>
 					</ul>
 				</li>
+				<!--
+				You’ve found the archived changelog! Welcome!
 				<li><b>v.1.1</b> (2018-06-20)<br />
 					<ul>
 						<li>Changed image export mechanism to properly include fonts; IE support uncertain, please let me know if you have issues with it.</li>
@@ -474,8 +482,6 @@
 						<li>Preset XP values are now the ones provided in the core book 1.0. Of note, I was way off on everything past level 5, so check your NPCs.</li>
 					</ul>
 				</li>
-				<!--
-				You’ve found the archived changelog! Welcome!
 				<li>v.0.13 (2018-05-31)<br />
 					<ul>
 						<li>Adjusted canvas dimensions for image export. This might break some NPCs; let me know if your image is cut off.</li>
