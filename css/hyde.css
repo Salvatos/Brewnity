@@ -407,6 +407,19 @@ footer {
 .search-details { font-size: 13px; }
 .search-row:last-child hr { display: none; }
 
+@font-face {
+	font-family: 'Linux Biolinum O';
+	src: url('../fonts/LinBiolinum_R.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Linux Biolinum O';
+	src: url('../fonts/LinBiolinum_RB.otf') format('opentype');
+	font-weight: 700;
+	font-style: normal;
+}
+
 /* Race block */
 p.princeps {
 	font-family: OptimusPrincepsSemiBold;
